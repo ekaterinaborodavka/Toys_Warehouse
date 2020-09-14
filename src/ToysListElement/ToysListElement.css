@@ -1,0 +1,14 @@
+.ToysListElement {
+    width: 95%;
+    border-bottom: 0.5px solid black;
+    margin: 0.5% auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.ToysListElement_Column {
+    text-align: left;
+    margin: 0.5% 1%;;
+    width: 10%;
+    font-size: 1.1rem;
+}

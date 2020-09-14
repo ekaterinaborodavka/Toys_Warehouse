@@ -1,0 +1,53 @@
+.Wrong{
+    background-color:rgb(255, 183, 154);
+    font-size: 20px;
+    padding: 10px;
+    color: darkred;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.ToysList_Title {
+    width: 95%;
+    border-bottom: 2px solid black;
+    margin: 1% auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: bold;
+    color: rgb(23, 3, 97);
+}
+.ToysList_Column_Title {
+    text-align: left;
+    margin: 0.5% 1%;;
+    width: 10%;
+    font-size: 1.2rem;
+}
+
+.Title {
+    background-color: rgb(27, 145, 115);
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    padding: 10px;
+    color: white;
+  }
+
+  .ToysList_Button{
+      display: flex;
+      justify-content: space-around;
+      margin: 2%;
+  }
+
+  .ToysList_Button button{
+    width: 10%;
+    padding: 0.3%;
+    border: 1px solid rgb(23, 3, 97);
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: teal;
+    color: lightyellow;
+}
+.ToysList_Button button:hover{
+    color: black;
+}

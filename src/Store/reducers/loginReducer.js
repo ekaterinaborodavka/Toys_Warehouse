@@ -1,4 +1,3 @@
-
 import { LOGIN } from '../types/types';
 
 export const initialState = {
