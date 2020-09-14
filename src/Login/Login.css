@@ -1,0 +1,58 @@
+.filter{
+    background-color:rgba(0,0,0,0.4);
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    display:block;
+    z-index:1
+  }
+
+  .login{
+    width: 100%;
+    z-index:2;
+  }
+
+  .login-content{
+    position:relative;
+    margin:10% auto;
+    padding: 2%;
+    width:35%;
+    border:1px solid #000;
+    z-index:2;
+    background-color:#fff;
+    display:flex;
+    flex-wrap: wrap;
+  }
+
+  .login-title{
+    font-size:1.2em;
+    margin: 2%;
+    width: 100%;
+    text-align: center;
+  }
+
+  .email, .password{
+    width: 100%;
+    margin: 2%;
+    display: flex;
+  }
+  .email p, .password p{
+    width: 20%;
+    margin: 2%;
+  }
+  .email input, .password input{
+    width: 60%;
+  }
+
+  .login_button{
+    text-align:center;
+    width:30%;
+    border:1px solid transparent;
+    border-radius:5%;
+    padding:1%;
+    margin:2% auto;
+    background-color:#38793a;
+    color:#fff
+  }
