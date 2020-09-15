@@ -60,7 +60,7 @@ export default function ToysList() {
                         name='transactions' 
                         onClick={ goPages }>Transactions</button>
                 <button className='Categories_Button'
-                        name='categories' 
+                        name='categoryList' 
                         onClick={ goPages }>Categories</button>
             </div>
         </div>

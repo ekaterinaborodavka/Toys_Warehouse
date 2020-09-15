@@ -14,6 +14,8 @@ import About from '../About/About';
 // import * as toysActions from '../Store/actions/toysAction';
 
 import './App.css';
+import Transaction from '../Transaction/Transaction';
+import CategoryList from '../CategoryList/CategoryList';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -39,6 +41,12 @@ export default function App() {
           </Route>
           <Route path='/about'>
             <About />
+          </Route>
+          <Route path='/transactions'>
+            <Transaction />
+          </Route>
+          <Route path='/categoryList'>
+            <CategoryList />
           </Route>
       </Switch>
       </Router>

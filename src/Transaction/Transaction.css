@@ -1,0 +1,16 @@
+.Transaction_Title{
+    width: 100%;
+    font-size: 1.3rem;
+    padding: 1%;
+    text-align: center;
+    background-color: rgb(177, 231, 218);
+    font-weight: bold;
+    color: darkslategray;
+}
+
+.Transaction_Content{
+    width: 80%;
+    margin: 2% auto;
+    text-align: center;
+    font-size: 1.1rem;
+}

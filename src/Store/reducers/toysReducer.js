@@ -1,8 +1,10 @@
 import { GET_TOYS, GET_TITLE_CATEGORY, CHANGE_INCOMIN } from '../types/types';
 import { toys } from '../../Utils/toys'
+import { categories } from '../../Utils/CategotyToys';
 
 export const initialState = {
     list: toys,
+    categoriesList: categories,
     titleCategiry: [],
     error: null,
     loading: null,
