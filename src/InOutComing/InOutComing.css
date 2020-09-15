@@ -1,0 +1,56 @@
+.InOutcoming_container{
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+.InOutcoming_Title{
+    width: 100%;
+    font-size: 1.3rem;
+    padding: 1%;
+    text-align: center;
+    background-color: rgb(177, 231, 218);
+    font-weight: bold;
+    color: darkslategray;
+}
+
+.InOutcoming_form{
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 2%;
+}
+
+.InOutcoming_form input, .InOutcoming_form select{
+    width: 15%;
+}
+
+.Form_buttons_container{
+    width: 90%;
+    margin: 2%;
+}
+
+.Form_button_plus{
+    border: 1px solid transparent;
+    background-color: transparent;
+    margin: 1%;
+}
+.Form_button_plus i{
+    font-size: 1.7rem;
+    color: teal;
+}
+
+.Form_button{
+    width: 10%;
+    margin: 1%;
+    padding: 0.3%;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: teal;
+    color: lightyellow;
+}
+.Form_button:hover{
+    color: black;
+}

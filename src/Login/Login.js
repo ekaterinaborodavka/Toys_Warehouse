@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import * as loginActions from '../Store/actions/loginAction';
@@ -10,14 +10,16 @@ export default function Login() {
     const history = useHistory();
     const password = useSelector((state) => state.login.password, shallowEqual);
     const dispatch = useDispatch();
-    
-    const login = () => {
-        if(password === '1234567890'){
-            history.push('/toyslist')
-        }else{
-            alert('password is incorrect')
-        }
-    }
+
+    const login = useCallback(
+        () => {
+            if(password === '1234567890'){
+                history.push('/toyslist')
+            }else{
+                alert('password is incorrect')
+            }
+    }, [history, password]
+    )
 
     const onInputChange = useCallback(
         ({ target }) => {
