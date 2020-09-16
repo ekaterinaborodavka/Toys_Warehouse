@@ -1,27 +1,17 @@
+import {v4 as uuidv4} from 'uuid';
 
-export const getTotal = (goods) => {
-  return goods.reduce((acc, item) => {
-    return acc + parseFloat(item.weight);
-  }, 0);
+export const removeCategory = (categories, id) => {
+  return categories.filter((e) => e.id !== id)
 };
 
-export const getTitleCategiry = (toys) => {
-  const categoryTitleToys =toys
-  categoryTitleToys.forEach(el => {
-    delete el.description
-    delete el.category
-    delete el.weight
-  });
-  return categoryTitleToys
+export const newItemCategory = (data) => {
+  console.log(data);
+  return {
+    id: uuidv4(),
+    name: data
+  };
 };
 
-export const toggleCheckbox = (id, goods) => {
-  return goods.map((item) => {
-    if (item.id === id) {
-      return {...item, active: !item.active};
-    }
-    return item;
-  });
+export const addCategory = (categories, data) => {
+  return [...categories, newItemCategory(data)]
 };
-
-

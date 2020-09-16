@@ -2,22 +2,14 @@ import React, { useCallback, useEffect } from 'react'
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import CategoryToys from '../CategoryToys/CategoryToys'
-import { getTitleCategiry } from '../Utils/toysUtils'
-import * as toysActions from '../Store/actions/toysAction';
 
 import './InOutComing.css'
 
 export default function Incoming() {
-    const titleCategiry = useSelector((state) => state.toys.titleCategiry, shallowEqual);
     const toys = useSelector((state) => state.toys.list, shallowEqual);
-    const categories = useSelector((state) => state.toys.categoriesList, shallowEqual);
+    const categories = useSelector((state) => state.categories.categoriesList, shallowEqual);
     const incoming = useSelector((state) => state.toys.incoming, shallowEqual);
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        const categoryTitleArr = getTitleCategiry(toys)
-        dispatch(toysActions.getTitleCategory(categoryTitleArr));
-    }, [toys, dispatch]);
 
     const onFormSubmit = useCallback(
         (e) => {
@@ -33,7 +25,7 @@ export default function Incoming() {
         <div className='InOutcoming_container'>
             <form className='InOutcoming_form' onSubmit={ onFormSubmit }>
                 <CategoryToys categories={ categories } name={ 'category' } />
-                <CategoryToys titleCategiry={ titleCategiry } name={ 'title' }/>
+                <CategoryToys toys={ toys } name={ 'title' }/>
                 <input 
                     className='Quantity_Toys' 
                     name='quantity' 

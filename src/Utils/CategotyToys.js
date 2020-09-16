@@ -3,38 +3,30 @@ import {v4 as uuidv4} from 'uuid';
 export const categories = [
   {
     id: uuidv4(),
-    name: 'Any product',
+    name: 'Total',
   },
   {
     id: uuidv4(),
-    name: 'Soft drinks',
+    name: 'Constructor',
   },
   {
     id: uuidv4(),
-    name: 'Alcohol',
+    name: 'Dolls',
   },
   {
     id: uuidv4(),
-    name: 'Fruits',
+    name: 'Stuffed toys',
   },
   {
     id: uuidv4(),
-    name: 'Vegetables',
+    name: 'Board game',
   },
   {
     id: uuidv4(),
-    name: 'Meat',
+    name: 'Interactive',
   },
   {
     id: uuidv4(),
-    name: 'Dairy',
-  },
-  {
-    id: uuidv4(),
-    name: 'Fish',
-  },
-  {
-    id: uuidv4(),
-    name: 'Bakery',
+    name: 'Sport',
   },
 ];

@@ -1,25 +1,35 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import CategoryListElement from '../CategoryListElement/CategoryListElement'
+import * as categoriesActions from '../Store/actions/categoriesAction';
+import { addCategory } from '../Utils/toysUtils'
 
 import './CategoryList.css'
 
 export default function CategoryList() {
-    const categories = useSelector((state) => state.toys.categoriesList, shallowEqual);
+    const categories = useSelector((state) => state.categories.categoriesList, shallowEqual);
+    const newCategory = useSelector((state) => state.categories.newCategory, shallowEqual);
     const dispatch = useDispatch();
+
+    const deleteICategory = useCallback(
+        (id) => {
+          dispatch(categoriesActions.deleteCategory(id));
+        }, [dispatch],
+    );
 
     const onFormSubmit = useCallback(
         (e) => {
           e.preventDefault();
-          console.log(e.target);
+          dispatch(categoriesActions.addNewCategory(newCategory))
+          console.log(newCategory);
         }, [],
     );
 
-    const onInputChange = useCallback(
+    const onCategoryChange = useCallback(
         ({ target }) => {
-            console.log(target.value);
-        }, [],
+            dispatch(categoriesActions.updateFormCategory(target.value));
+        }, [dispatch],
     );
 
     return (
@@ -32,6 +42,7 @@ export default function CategoryList() {
                     <CategoryListElement
                         category={ cat }
                         key={ cat.id }
+                        onDelete={ deleteICategory }
                     />
                     );
                 })}
@@ -40,7 +51,8 @@ export default function CategoryList() {
                     className='CategoryList_Form_Input' 
                     name='category'
                     placeholder='New Category'
-                    onChange={ onInputChange }/>
+                    value={ newCategory }
+                    onChange={ onCategoryChange }/>
                     <button className='CategoryList_Button'>Add Category</button>
                 </form>
             </div>
