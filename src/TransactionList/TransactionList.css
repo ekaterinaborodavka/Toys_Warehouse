@@ -1,0 +1,12 @@
+.Transaction_Item{
+    font-size: 1.3rem;
+    text-align: left;
+}
+
+.Transaction_Item_Details_Open{
+    margin: 2%;
+}
+
+.Transaction_Item_Details_Close{
+    display: none;
+}

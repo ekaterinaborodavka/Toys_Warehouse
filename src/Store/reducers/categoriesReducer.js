@@ -1,4 +1,4 @@
-import { DELETE_CATEGORY, UPDATE_FORM_CATEGORY, ADD_NEW_CATEGORY } from '../types/types';
+import { DELETE_CATEGORY, UPDATE_FORM_CATEGORY, ADD_NEW_CATEGORY, CLEAR_FORM } from '../types/types';
 import { categories } from '../../Utils/CategotyToys';
 import { removeCategory, addCategory } from '../../Utils/toysUtils'
 
@@ -27,6 +27,12 @@ export const initialState = {
         return{
             ...state,
             categoriesList: newCategoryList 
+        }
+      }
+      case CLEAR_FORM:
+      case ADD_NEW_CATEGORY:  {
+        return{
+            ...initialState,
         }
       }
       default:

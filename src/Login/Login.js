@@ -9,6 +9,7 @@ import './Login.css'
 export default function Login() {
     const history = useHistory();
     const password = useSelector((state) => state.login.password, shallowEqual);
+    const email = useSelector((state) => state.login.email, shallowEqual);
     const dispatch = useDispatch();
 
     const login = useCallback(
@@ -23,7 +24,9 @@ export default function Login() {
 
     const onInputChange = useCallback(
         ({ target }) => {
-          dispatch(loginActions.login(target.value));
+          dispatch(loginActions.login({
+              [target.name] : target.value
+          }));
         }, [dispatch],
     );
 
@@ -37,7 +40,8 @@ export default function Login() {
                     <p> Email: </p>
                     <input name='email'
                         placeholder='Email' 
-                        type='email'/>
+                        type='email'
+                        onChange={ onInputChange }/>
                 </div>
                 <div className='password'>
                     <p> Password: </p>

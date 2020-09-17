@@ -1,8 +1,8 @@
 import { LOGIN } from '../types/types';
 
-export const login = (password) => {
+export const login = (login) => {
   return {
     type: LOGIN,
-    password,
+    payload: login
   };
 };

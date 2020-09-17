@@ -1,9 +1,8 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback } from 'react'
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import CategoryListElement from '../CategoryListElement/CategoryListElement'
 import * as categoriesActions from '../Store/actions/categoriesAction';
-import { addCategory } from '../Utils/toysUtils'
 
 import './CategoryList.css'
 
@@ -22,9 +21,9 @@ export default function CategoryList() {
         (e) => {
           e.preventDefault();
           dispatch(categoriesActions.addNewCategory(newCategory))
-          console.log(newCategory);
-        }, [],
-    );
+          dispatch(categoriesActions.updateFormCategory(''));
+        }, [newCategory]
+    )
 
     const onCategoryChange = useCallback(
         ({ target }) => {

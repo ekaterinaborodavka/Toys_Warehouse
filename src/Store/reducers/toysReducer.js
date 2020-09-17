@@ -5,7 +5,8 @@ export const initialState = {
     list: toys,
     error: null,
     loading: null,
-    incoming: ''
+    incoming: '',
+    transaction: []
   };
 
 const reducer = (state = initialState, action) => {

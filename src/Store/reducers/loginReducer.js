@@ -1,7 +1,8 @@
 import { LOGIN } from '../types/types';
 
 export const initialState = {
-    password: ''
+    password: '',
+    email:''
 };
 
 const reducer = (state = initialState, action) => {
@@ -9,7 +10,7 @@ const reducer = (state = initialState, action) => {
     case LOGIN: {
       return {
         ...state,
-        password: action.password
+        ...action.payload
       };
     }
     default:

@@ -5,10 +5,9 @@ export const removeCategory = (categories, id) => {
 };
 
 export const newItemCategory = (data) => {
-  console.log(data);
   return {
     id: uuidv4(),
-    name: data
+    name: data,
   };
 };
 
