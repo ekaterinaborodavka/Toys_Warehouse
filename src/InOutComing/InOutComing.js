@@ -1,7 +1,9 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import {v4 as uuidv4} from 'uuid';
 
 import CategoryToys from '../CategoryToys/CategoryToys'
+import InOutComingInputs from '../InOutComingInputs/InOutComingInputs';
 
 import './InOutComing.css'
 
@@ -10,6 +12,15 @@ export default function Incoming() {
     const categories = useSelector((state) => state.categories.categoriesList, shallowEqual);
     const incoming = useSelector((state) => state.toys.incoming, shallowEqual);
     const dispatch = useDispatch();
+    let [countInput, setCountInput] = useState(0)
+    let arrInput = []
+
+    const onAddInput = useCallback(
+        (e) => {
+         setCountInput(countInput++)
+         console.log(countInput)
+        }, [],
+    );
 
     const onFormSubmit = useCallback(
         (e) => {
@@ -18,13 +29,26 @@ export default function Incoming() {
         }, [],
     );
 
+    for (let i=0; i<countInput; i++){
+        arrInput.push(<InOutComingInputs 
+            categories={ categories }
+            key = { uuidv4() }
+            toys={ toys }
+            incoming= { incoming }/>)
+    }
+
     return (
         <React.Fragment>
         <h1 className='Title'>Toys Warehouse</h1>
         <h2 className='InOutcoming_Title'>{ incoming? 'Incoming': 'Outcoming'}</h2>
         <div className='InOutcoming_container'>
             <form className='InOutcoming_form' onSubmit={ onFormSubmit }>
-                <CategoryToys categories={ categories } name={ 'category' } />
+                <InOutComingInputs 
+                    categories={ categories }
+                    toys={ toys }
+                    incoming= { incoming }/>
+                    { arrInput }
+                {/* <CategoryToys categories={ categories } name={ 'category' } />
                 <CategoryToys toys={ toys } name={ 'title' }/>
                 <input 
                     className='Quantity_Toys' 
@@ -33,10 +57,11 @@ export default function Incoming() {
                 {incoming ? <input 
                     className='Description_Toys' 
                     name='description' 
-                    placeholder='description' /> : null}
+                    placeholder='description' /> : null} */}
                 <div className='Form_buttons_container'>
                     <div>
-                        <button type='button' className='Form_button_plus'>
+                        <button type='button' className='Form_button_plus'
+                            onClick={ onAddInput }>
                             <i className='fa fa-plus-square-o'></i>
                         </button>
                     </div>

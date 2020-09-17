@@ -28,7 +28,7 @@
 
 .Form_buttons_container{
     width: 90%;
-    margin: 2%;
+    margin: 2% 2% 2% 50%;
 }
 
 .Form_button_plus{
@@ -39,6 +39,7 @@
 .Form_button_plus i{
     font-size: 1.7rem;
     color: teal;
+    margin-left: 50%;
 }
 
 .Form_button{
