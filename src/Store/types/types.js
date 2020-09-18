@@ -5,3 +5,5 @@ export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 export const UPDATE_FORM_CATEGORY = 'UPDATE_FORM_CATEGORY';
 export const ADD_NEW_CATEGORY = 'ADD_NEW_CATEGORY';
 export const CLEAR_FORM = 'CLEAR_FORM';
+export const ADD_ITEM = 'ADD_ITEM';
+export const UPDATE_FORM_TOY = 'UPDATE_FORM_TOY';

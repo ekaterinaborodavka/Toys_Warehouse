@@ -1,5 +1,5 @@
 import { getToys as getToysResource } from '../../Resources/toys';
-import { GET_TOYS, CHANGE_INCOMIN } from '../types/types';
+import { GET_TOYS, CHANGE_INCOMIN, ADD_ITEM } from '../types/types';
 
 export const getToys = () => {
     return async (dispatch, getState) => {
@@ -23,9 +23,18 @@ export const getToys = () => {
     };
   };
 
+  export const addItem = (list, item) => {
+    return {
+      type: ADD_ITEM,
+      list,
+      item,
+    };
+  };
+
   export const changeIncomin = (bool) => {
     return {
       type: CHANGE_INCOMIN,
       bool
     };
   };
+

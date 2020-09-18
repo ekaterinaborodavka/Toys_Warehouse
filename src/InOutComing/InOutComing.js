@@ -1,32 +1,49 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
 
-import CategoryToys from '../CategoryToys/CategoryToys'
+// import CategoryToys from '../CategoryToys/CategoryToys'
 import InOutComingInputs from '../InOutComingInputs/InOutComingInputs';
+import * as formActions from '../Store/actions/formActions';
+import * as toysActions from '../Store/actions/toysAction';
 
 import './InOutComing.css'
 
 export default function Incoming() {
     const toys = useSelector((state) => state.toys.list, shallowEqual);
+    const form = useSelector((state) => state.form, shallowEqual);
     const categories = useSelector((state) => state.categories.categoriesList, shallowEqual);
     const incoming = useSelector((state) => state.toys.incoming, shallowEqual);
     const dispatch = useDispatch();
+    const history = useHistory();
     let [countInput, setCountInput] = useState(0)
     let arrInput = []
 
     const onAddInput = useCallback(
         (e) => {
          setCountInput(countInput++)
-         console.log(countInput)
         }, [],
     );
 
     const onFormSubmit = useCallback(
         (e) => {
           e.preventDefault();
-          console.log(e.target);
-        }, [],
+          if(incoming){
+            dispatch(toysActions.addItem(toys, form))
+          }else{
+            console.log('outcoming');
+          }
+          history.push('/toyslist')
+        }, [dispatch, form],
+    );
+
+    const onInputComingChange = useCallback(
+        ({ target }) => {
+        dispatch(formActions.updateFormToy({
+            [target.name]: target.value
+        }))
+        }, [dispatch],
     );
 
     for (let i=0; i<countInput; i++){
@@ -34,7 +51,8 @@ export default function Incoming() {
             categories={ categories }
             key = { uuidv4() }
             toys={ toys }
-            incoming= { incoming }/>)
+            incoming= { incoming }
+            onInputComingChange={ onInputComingChange }/>)
     }
 
     return (
@@ -46,7 +64,8 @@ export default function Incoming() {
                 <InOutComingInputs 
                     categories={ categories }
                     toys={ toys }
-                    incoming= { incoming }/>
+                    incoming= { incoming }
+                    onInputComingChange={ onInputComingChange }/>
                     { arrInput }
                 {/* <CategoryToys categories={ categories } name={ 'category' } />
                 <CategoryToys toys={ toys } name={ 'title' }/>

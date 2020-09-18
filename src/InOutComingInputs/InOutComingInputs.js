@@ -5,20 +5,29 @@ import CategoryToys from '../CategoryToys/CategoryToys'
 import './InOutComingInputs.css'
 
 export default function InOutComingInputs(props) {
-    const { categories, toys, incoming } = props
+    const { categories, toys, incoming, onInputComingChange } = props
 
     return (
         <div className='InOut_Coming_Inputs_Wrapper'>
-            <CategoryToys categories={ categories } name={ 'category' } />
-            <CategoryToys toys={ toys } name={ 'title' }/>
+            <CategoryToys 
+                categories={ categories } 
+                name={ 'category' }
+                onInputComingChange={ onInputComingChange } />
+            <CategoryToys 
+                toys={ toys } 
+                name={ 'title' }
+                onInputComingChange={ onInputComingChange }/>
             <input 
                 className='Quantity_Toys' 
                 name='quantity' 
-                placeholder='quantity' />
+                placeholder='quantity'
+                type='number'
+                onChange={ onInputComingChange } />
             {incoming ? <input 
                 className='Description_Toys' 
                 name='description' 
-                placeholder='description' /> : null}
+                placeholder='description'
+                onChange={ onInputComingChange } /> : null}
         </div>
     )
 }
