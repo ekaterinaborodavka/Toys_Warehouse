@@ -15,9 +15,11 @@ export default function ToysList() {
     const error = useSelector((state) => state.toys.error, shallowEqual);
     const isLoading = useSelector((state) => state.toys.loading,
         shallowEqual);
+    const token = useSelector((state) => state.login.token, shallowEqual);
 
     useEffect(() => {
-        dispatch(toysActions.getToys());
+        console.log(token);
+        dispatch(toysActions.getToys(token));
     }, [dispatch]);
 
     const goPages = useCallback(

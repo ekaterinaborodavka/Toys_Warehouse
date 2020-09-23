@@ -1,22 +1,25 @@
 let endpoint = null;
-let token = '';
+// let token = null;
 
-const headers = {
-  'content-type': 'application/json',
-  'authorization': `Bearer[${token}]`
-};
+// const headers = {
+//   'content-type': 'application/json',
+//   'Authorization': `Bearer ${token}`
+// };
 
 export const initWithEndpoint = (url) => {
   endpoint = url;
 };
 
 export const initToken = (UserToken) => {
-  token = UserToken;
+  // token = UserToken;
   console.log(UserToken);
 };
 
-export const get = async (resource) => {
-  return fetch( [endpoint, resource].join('/') ).then((res) => res.json())
+export const get = async (resource, token) => {
+  return fetch( [endpoint, resource].join('/'), {headers:{
+    'content-type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }} ).then((res) => res.json())
       .then((res) => {
         return res;
       });
@@ -25,7 +28,9 @@ export const get = async (resource) => {
 
 export const authorized = async (resource, item) => {
   return fetch( [endpoint, resource].join('/'),
-      { headers, body: JSON.stringify(item), method: 'POST' } ).then((res) => res.json())
+      { headers:{
+        'content-type': 'application/json'
+      }, body: JSON.stringify(item), method: 'POST' } ).then((res) => res.json())
       .then((res) => {
         return res.accessToken;
       });

@@ -1,15 +1,10 @@
 import { get, authorized } from '../Services/networkProvider';
 
-export const getToys = async () => {
-  const res = await get('toys');
+export const getToys = async (token) => {
+  const res = await get('toys', token);
   return res
 };
 
-export const getLogin = async () => {
-  const res = await get('profile');
-  console.log(res);
-  return res
-};
 
 export const createAuthorized = (item = {}) => {
   return authorized('login', item);

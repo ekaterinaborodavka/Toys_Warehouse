@@ -11,6 +11,7 @@ export const login = (item) => {
     createAuthorized(item).then((res) => {
       if(res){
         initToken(res)
+        localStorage.setItem('token', res)
         dispatch({
           type: LOGIN,
           subtype: 'success',

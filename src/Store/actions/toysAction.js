@@ -1,13 +1,13 @@
 import { getToys as getToysResource } from '../../Resources/toys';
 import { GET_TOYS, CHANGE_INCOMIN, ADD_ITEM, BUY_ITEM } from '../types/types';
 
-export const getToys = () => {
+export const getToys = (token) => {
     return async (dispatch, getState) => {
       dispatch({
         type: GET_TOYS,
         subtype: 'loading',
       });
-      getToysResource().then((res) => {
+      getToysResource(token).then((res) => {
         console.log(res);
         dispatch({
           type: GET_TOYS,
