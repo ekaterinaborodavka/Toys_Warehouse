@@ -17,6 +17,7 @@ export default function Transaction() {
                     return (
                     <TransactionList
                         transaction={ transaction }
+                        items = { transaction.items }
                         key={ transaction.id }
                     />
                     )

@@ -29,10 +29,12 @@ export default function Incoming() {
     const onFormSubmit = useCallback(
         (e) => {
           e.preventDefault();
-          if(incoming){
+          if(incoming && form.title && form.category){
             dispatch(toysActions.addItem(toys, form))
+          }else if( form.title && form.category ){
+            dispatch(toysActions.buyItem(toys, form))
           }else{
-            console.log('outcoming');
+            alert('Ведите категорию и название игрушки')
           }
           history.push('/toyslist')
         }, [dispatch, form],

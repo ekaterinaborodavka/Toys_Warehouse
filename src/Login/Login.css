@@ -53,6 +53,19 @@
     border-radius:5%;
     padding:1%;
     margin:2% auto;
-    background-color:#38793a;
+    background-color:#579c5a;
     color:#fff
+  }
+
+  .Wrong_Login{
+    background-color:rgb(255, 209, 191);
+    text-align: center;
+    padding: 10px;
+    color: darkred;
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  .login-content .lds-dual-ring{
+    margin: 0 auto;
   }

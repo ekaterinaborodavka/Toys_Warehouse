@@ -1,4 +1,4 @@
-import React, { useCallback }  from 'react'
+import React, { useCallback, useEffect }  from 'react'
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -16,6 +16,10 @@ export default function ToysList() {
     const isLoading = useSelector((state) => state.toys.loading,
         shallowEqual);
 
+    useEffect(() => {
+        dispatch(toysActions.getToys());
+    }, [dispatch]);
+
     const goPages = useCallback(
         (e) => {
             history.push(`/${e.target.name}`)
@@ -31,21 +35,6 @@ export default function ToysList() {
         <div>
             {isLoading && <Loader />}
             <h1 className='Title'>Toys Warehouse</h1>
-            <div className='ToysList_Title'>
-                <div className='ToysList_Column_Title'>Title</div>
-                <div className='ToysList_Column_Title'>Quantity</div>
-                <div className='ToysList_Column_Title'>Description</div>
-                <div className='ToysList_Column_Title'>Category</div>
-            </div>
-            {Array.isArray(toys) && toys.map( (toy) => {
-            return (
-            <ToysListElement
-                toy={ toy }
-                key={ toy.id }
-            />
-            );
-            })}
-            {error && <div className='Wrong' >ERROR: {error}</div>}
             <div className='ToysList_Button'>
                 <button className='Incoming_Button' 
                         name='incoming' 
@@ -63,6 +52,21 @@ export default function ToysList() {
                         name='categoryList' 
                         onClick={ goPages }>Categories</button>
             </div>
+            <div className='ToysList_Title'>
+                <div className='ToysList_Column_Title'>Title</div>
+                <div className='ToysList_Column_Title'>Quantity</div>
+                <div className='ToysList_Column_Title'>Description</div>
+                <div className='ToysList_Column_Title'>Category</div>
+            </div>
+            {Array.isArray(toys) && toys.map( (toy) => {
+            return (
+            <ToysListElement
+                toy={ toy }
+                key={ toy.id }
+            />
+            );
+            })}
+            {error && <div className='Wrong' >ERROR: {error}</div>}
         </div>
     )
 }

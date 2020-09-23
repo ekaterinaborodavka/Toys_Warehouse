@@ -4,14 +4,13 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link, 
 } from "react-router-dom";
 
 import Login from '../Login/Login';
 import ToysList from '../ToysList/ToysList'
 import InOutComing from '../InOutComing/InOutComing';
 import About from '../About/About';
-// import * as toysActions from '../Store/actions/toysAction';
+import * as toysActions from '../Store/actions/toysAction';
 
 import './App.css';
 import Transaction from '../Transaction/Transaction';

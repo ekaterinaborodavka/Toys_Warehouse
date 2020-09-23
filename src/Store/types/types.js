@@ -1,4 +1,5 @@
 export const LOGIN = 'LOGIN';
+export const UPDATE_FORM_LOGIN = 'UPDATE_FORM_LOGIN';
 export const GET_TOYS = 'GET_TOYS';
 export const CHANGE_INCOMIN = 'CHANGE_INCOMIN';
 export const DELETE_CATEGORY = 'DELETE_CATEGORY';
@@ -6,4 +7,5 @@ export const UPDATE_FORM_CATEGORY = 'UPDATE_FORM_CATEGORY';
 export const ADD_NEW_CATEGORY = 'ADD_NEW_CATEGORY';
 export const CLEAR_FORM = 'CLEAR_FORM';
 export const ADD_ITEM = 'ADD_ITEM';
+export const BUY_ITEM = 'BUY_ITEM';
 export const UPDATE_FORM_TOY = 'UPDATE_FORM_TOY';

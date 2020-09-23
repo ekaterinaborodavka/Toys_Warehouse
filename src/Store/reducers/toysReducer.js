@@ -1,9 +1,8 @@
-import { GET_TOYS, CHANGE_INCOMIN, ADD_ITEM } from '../types/types';
-import { addNewItem } from '../../Utils/toysUtils'
-import { toys } from '../../Utils/toys'
+import { GET_TOYS, CHANGE_INCOMIN, ADD_ITEM, BUY_ITEM } from '../types/types';
+import { addNewItem, buyItem } from '../../Utils/toysUtils'
 
 export const initialState = {
-    list: toys,
+    list: [],
     error: null,
     loading: null,
     incoming: '',
@@ -16,12 +15,19 @@ const reducer = (state = initialState, action) => {
         return {
           ...state,
           list: action.subtype === 'success' ? action.list : state.toys,
-          error: action.subtype === 'loading',
-          loading: action.subtype === 'failed' ? action.error : null,
+          loading: action.subtype === 'loading',
+          error: action.subtype === 'failed' ? action.error : null,
         };
       }
       case ADD_ITEM: {
         const newList = addNewItem(action.list, action.item);
+        return {
+          ...state,
+          list: newList
+        };
+      }
+      case BUY_ITEM: {
+        const newList = buyItem(action.list, action.item);
         return {
           ...state,
           list: newList

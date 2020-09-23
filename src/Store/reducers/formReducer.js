@@ -1,4 +1,4 @@
-import { UPDATE_FORM_TOY } from '../types/types';
+import { UPDATE_FORM_TOY, CLEAR_FORM, ADD_NEW_CATEGORY, ADD_ITEM, BUY_ITEM } from '../types/types';
 
 export const initialState = {
     title: '',
@@ -15,6 +15,14 @@ const reducer = (state = initialState, action) => {
               ...action.payload
             };
           }
+          case CLEAR_FORM:
+            case ADD_NEW_CATEGORY:
+              case ADD_ITEM: 
+              case BUY_ITEM: {
+              return{
+                  ...initialState,
+              }
+            }
       default:
         return state;
     }

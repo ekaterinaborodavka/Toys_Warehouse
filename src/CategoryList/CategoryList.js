@@ -7,13 +7,14 @@ import * as categoriesActions from '../Store/actions/categoriesAction';
 import './CategoryList.css'
 
 export default function CategoryList() {
+    const toys = useSelector((state) => state.toys.list, shallowEqual);
     const categories = useSelector((state) => state.categories.categoriesList, shallowEqual);
     const newCategory = useSelector((state) => state.categories.newCategory, shallowEqual);
     const dispatch = useDispatch();
 
     const deleteICategory = useCallback(
         (id) => {
-          dispatch(categoriesActions.deleteCategory(id));
+          dispatch(categoriesActions.deleteCategory(toys, id));
         }, [dispatch],
     );
 

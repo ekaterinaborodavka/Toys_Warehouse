@@ -1,6 +1,7 @@
 .Transaction_Item{
     font-size: 1.3rem;
     text-align: left;
+    padding: 1%;
 }
 
 .Transaction_Item_Details_Open{
@@ -9,4 +10,11 @@
 
 .Transaction_Item_Details_Close{
     display: none;
+}
+
+.Incoming{
+    color: rgb(43, 150, 43);
+}
+.Outcoming{
+    color: rgb(190, 45, 45);
 }

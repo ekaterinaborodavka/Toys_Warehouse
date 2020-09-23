@@ -18,6 +18,7 @@ export default function InOutComingInputs(props) {
                 name={ 'title' }
                 onInputComingChange={ onInputComingChange }/>
             <input 
+                required
                 className='Quantity_Toys' 
                 name='quantity' 
                 placeholder='quantity'

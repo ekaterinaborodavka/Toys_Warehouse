@@ -2,29 +2,31 @@ import React, { useCallback } from 'react'
 import { useHistory } from 'react-router-dom';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
+import Loader from '../Loader/Loader'
 import * as loginActions from '../Store/actions/loginAction';
 
 import './Login.css'
 
 export default function Login() {
     const history = useHistory();
-    const password = useSelector((state) => state.login.password, shallowEqual);
-    const email = useSelector((state) => state.login.email, shallowEqual);
+    const password = useSelector((state) => state.login.form.password, shallowEqual);
+    const email = useSelector((state) => state.login.form.email, shallowEqual);
+    const loading = useSelector((state) => state.login.loading, shallowEqual);
+    const error = useSelector((state) => state.login.error, shallowEqual);
     const dispatch = useDispatch();
 
     const login = useCallback(
         () => {
+            dispatch(loginActions.login({email, password}))
             if(password === '1234567890'){
-                history.push('/toyslist')
-            }else{
-                alert('password is incorrect')
+                    history.push('/toyslist')
             }
     }, [history, password]
     )
 
     const onInputChange = useCallback(
         ({ target }) => {
-          dispatch(loginActions.login({
+          dispatch(loginActions.updateFormLogin({
               [target.name] : target.value
           }));
         }, [dispatch],
@@ -50,10 +52,12 @@ export default function Login() {
                         type='password'
                         onChange={ onInputChange }/>
                 </div>
-                <button 
+                {error && <div className='Wrong_Login' >ERROR: {error.message}</div>}
+                {loading ? <Loader /> : <button 
                     type='button' 
                     className='login_button'
-                    onClick={ login } >Login</button>
+                    onClick={ login }> Login
+                </button> }
             </div>
             </div>
         </React.Fragment>

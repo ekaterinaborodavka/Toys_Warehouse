@@ -10,7 +10,7 @@ export const initialState = {
   const reducer = (state = initialState, action) => {
     switch (action.type) {
       case DELETE_CATEGORY: {
-        const newCategoryList = removeCategory(state.categoriesList, action.id)
+        const newCategoryList = removeCategory(action.toys, state.categoriesList, action.id)
         return{
             ...state,
             categoriesList: newCategoryList
@@ -27,12 +27,6 @@ export const initialState = {
         return{
             ...state,
             categoriesList: newCategoryList 
-        }
-      }
-      case CLEAR_FORM:
-      case ADD_NEW_CATEGORY:  {
-        return{
-            ...initialState,
         }
       }
       default:

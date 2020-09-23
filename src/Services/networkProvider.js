@@ -14,3 +14,13 @@ export const get = async (resource) => {
         return res;
       });
 };
+
+
+export const authorized = async (resource, item) => {
+  console.log(item);
+  return fetch( [endpoint, resource].join('/'),
+      { headers, body: JSON.stringify(item), method: 'POST' } ).then((res) => res.json())
+      .then((res) => {
+        return res;
+      });
+};

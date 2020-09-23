@@ -7,6 +7,7 @@ export default function CategoryToys(props) {
 
   return (
     <select className='Category_Toys'
+      required
       onChange={ onInputComingChange }
       name={ name }>{
         name === 'category' ? categories.map(({ id, name }) => (
