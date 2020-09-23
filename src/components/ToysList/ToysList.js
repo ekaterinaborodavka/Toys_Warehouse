@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import Loader from '../Loader/Loader';
 import ToysListElement from '../ToysListElement/ToysListElement';
-import * as toysActions from '../Store/actions/toysAction';
+import * as toysActions from '../../Store/actions/toysAction';
 
 import './ToysList.css'
 

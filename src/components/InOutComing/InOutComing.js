@@ -5,8 +5,8 @@ import {v4 as uuidv4} from 'uuid';
 
 // import CategoryToys from '../CategoryToys/CategoryToys'
 import InOutComingInputs from '../InOutComingInputs/InOutComingInputs';
-import * as formActions from '../Store/actions/formActions';
-import * as toysActions from '../Store/actions/toysAction';
+import * as formActions from '../../Store/actions/formActions';
+import * as toysActions from '../../Store/actions/toysAction';
 
 import './InOutComing.css'
 

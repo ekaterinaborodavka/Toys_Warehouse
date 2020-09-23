@@ -1,5 +1,6 @@
 import { LOGIN, UPDATE_FORM_LOGIN } from '../types/types';
 import { createAuthorized } from '../../Resources/toys';
+import { initToken } from '../../Services/networkProvider'
 
 export const login = (item) => {
   return async (dispatch, getState) => {
@@ -8,10 +9,11 @@ export const login = (item) => {
       subtype: 'loading',
     });
     createAuthorized(item).then((res) => {
+      initToken(res)
       dispatch({
         type: LOGIN,
         subtype: 'success',
-        token: res.accessToken,
+        token: res,
         username: item.email
       });
     }, (error) => {

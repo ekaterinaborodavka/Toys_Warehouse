@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import CategoryListElement from '../CategoryListElement/CategoryListElement'
-import * as categoriesActions from '../Store/actions/categoriesAction';
+import * as categoriesActions from '../../Store/actions/categoriesAction';
 
 import './CategoryList.css'
 

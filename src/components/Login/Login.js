@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import Loader from '../Loader/Loader'
-import * as loginActions from '../Store/actions/loginAction';
+import * as loginActions from '../../Store/actions/loginAction';
 
 import './Login.css'
 
