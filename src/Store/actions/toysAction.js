@@ -14,13 +14,12 @@ export const getToys = () => {
           subtype: 'success',
           list: res,
         });
-      }, (error) => {
+      });
         dispatch({
           type: GET_TOYS,
           subtype: 'failed',
-          error: error.message,
+          error: { message: 'Something went wrong' },
         });
-      });
     };
   };
 

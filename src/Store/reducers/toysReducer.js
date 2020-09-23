@@ -16,7 +16,7 @@ const reducer = (state = initialState, action) => {
           ...state,
           list: action.subtype === 'success' ? action.list : state.toys,
           loading: action.subtype === 'loading',
-          error: action.subtype === 'failed' ? action.error : null,
+          error: action.subtype === 'failed' ? action.error.message : null,
         };
       }
       case ADD_ITEM: {

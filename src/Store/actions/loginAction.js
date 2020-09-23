@@ -9,20 +9,21 @@ export const login = (item) => {
       subtype: 'loading',
     });
     createAuthorized(item).then((res) => {
-      initToken(res)
-      dispatch({
-        type: LOGIN,
-        subtype: 'success',
-        token: res,
-        username: item.email
-      });
-    }, (error) => {
+      if(res){
+        initToken(res)
+        dispatch({
+          type: LOGIN,
+          subtype: 'success',
+          token: res,
+          username: item.email
+        });
+      }
+    });
       dispatch({
         type: LOGIN,
         subtype: 'failed',
-        error: error.message,
+        error: { message: 'Password or login incorrect' },
       });
-    });
   };
 };
 

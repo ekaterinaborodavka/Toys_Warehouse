@@ -5,6 +5,12 @@ export const getToys = async () => {
   return res
 };
 
+export const getLogin = async () => {
+  const res = await get('profile');
+  console.log(res);
+  return res
+};
+
 export const createAuthorized = (item = {}) => {
   return authorized('login', item);
 };

@@ -58,6 +58,7 @@ export default function ToysList() {
                 <div className='ToysList_Column_Title'>Description</div>
                 <div className='ToysList_Column_Title'>Category</div>
             </div>
+            {error && <div className='Wrong' >ERROR: {error.message}</div>}
             {Array.isArray(toys) && toys.map( (toy) => {
             return (
             <ToysListElement
