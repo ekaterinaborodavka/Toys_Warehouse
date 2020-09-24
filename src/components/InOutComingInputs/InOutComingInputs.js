@@ -15,7 +15,7 @@ export default function InOutComingInputs(props) {
                 onInputComingChange={ onInputComingChange } />
             <CategoryToys 
                 toys={ toys } 
-                name={ 'title' }
+                name={ 'name' }
                 onInputComingChange={ onInputComingChange }/>
             <input 
                 required

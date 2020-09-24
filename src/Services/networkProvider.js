@@ -1,19 +1,9 @@
 let endpoint = null;
-// let token = null;
-
-// const headers = {
-//   'content-type': 'application/json',
-//   'Authorization': `Bearer ${token}`
-// };
 
 export const initWithEndpoint = (url) => {
   endpoint = url;
 };
 
-export const initToken = (UserToken) => {
-  // token = UserToken;
-  console.log(UserToken);
-};
 
 export const get = async (resource, token) => {
   return fetch( [endpoint, resource].join('/'), {headers:{

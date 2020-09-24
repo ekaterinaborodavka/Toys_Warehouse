@@ -1,6 +1,7 @@
 import { LOGIN, UPDATE_FORM_LOGIN } from '../types/types';
 import { createAuthorized } from '../../Resources/toys';
-import { initToken } from '../../Services/networkProvider'
+import * as toysActions from '../../Store/actions/toysAction';
+import * as categoriesActions from '../../Store/actions/categoriesAction';
 
 export const login = (item) => {
   return async (dispatch, getState) => {
@@ -10,7 +11,6 @@ export const login = (item) => {
     });
     createAuthorized(item).then((res) => {
       if(res){
-        initToken(res)
         localStorage.setItem('token', res)
         dispatch({
           type: LOGIN,
@@ -19,6 +19,10 @@ export const login = (item) => {
           username: item.email
         });
       }
+      return res
+    }).then(() => {
+      dispatch(toysActions.getToys());
+      dispatch(categoriesActions.getCategory());
     });
       dispatch({
         type: LOGIN,

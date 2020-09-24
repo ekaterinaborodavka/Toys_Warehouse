@@ -15,12 +15,10 @@ export default function ToysList() {
     const error = useSelector((state) => state.toys.error, shallowEqual);
     const isLoading = useSelector((state) => state.toys.loading,
         shallowEqual);
-    const token = useSelector((state) => state.login.token, shallowEqual);
-
-    useEffect(() => {
-        console.log(token);
-        dispatch(toysActions.getToys(token));
-    }, [dispatch]);
+console.log(toys);
+    // useEffect(() => {
+    //         dispatch(toysActions.getToys());
+    // }, []);
 
     const goPages = useCallback(
         (e) => {
@@ -55,12 +53,12 @@ export default function ToysList() {
                         onClick={ goPages }>Categories</button>
             </div>
             <div className='ToysList_Title'>
-                <div className='ToysList_Column_Title'>Title</div>
+                <div className='ToysList_Column_Title'>Name</div>
                 <div className='ToysList_Column_Title'>Quantity</div>
                 <div className='ToysList_Column_Title'>Description</div>
                 <div className='ToysList_Column_Title'>Category</div>
             </div>
-            {error && <div className='Wrong' >ERROR: {error.message}</div>}
+            {error && <div className='Wrong' >ERROR: {error}</div>}
             {Array.isArray(toys) && toys.map( (toy) => {
             return (
             <ToysListElement
@@ -69,7 +67,6 @@ export default function ToysList() {
             />
             );
             })}
-            {error && <div className='Wrong' >ERROR: {error}</div>}
         </div>
     )
 }

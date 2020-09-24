@@ -13,14 +13,15 @@ export default function Login() {
     const email = useSelector((state) => state.login.form.email, shallowEqual);
     const loading = useSelector((state) => state.login.loading, shallowEqual);
     const error = useSelector((state) => state.login.error, shallowEqual);
+    const token = useSelector((state) => state.login.token, shallowEqual);
     const dispatch = useDispatch();
 
     const login = useCallback(
         () => {
             dispatch(loginActions.login({email, password}))
-            if(password === '1234567890'){
+            // if(password === '1234567890'){
                     history.push('/toyslist')
-            }
+            // }
     }, [history, password]
     )
 

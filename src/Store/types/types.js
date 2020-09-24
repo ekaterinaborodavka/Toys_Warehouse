@@ -9,3 +9,4 @@ export const CLEAR_FORM = 'CLEAR_FORM';
 export const ADD_ITEM = 'ADD_ITEM';
 export const BUY_ITEM = 'BUY_ITEM';
 export const UPDATE_FORM_TOY = 'UPDATE_FORM_TOY';
+export const GET_CATEGORY = 'UPDATE_FORM_TOY';
