@@ -59,7 +59,8 @@ export const addNewCategory = (item) => async (dispatch, getState) =>{
     subtype: 'loading',
   });
   createCategory(newCat, token).then((res) => {
-    const newList = [...catList, newCat];
+    console.log(res);
+    const newList = [...catList, res];
     dispatch({
       type: ADD_NEW_CATEGORY,
       subtype: 'success',
@@ -74,24 +75,9 @@ export const addNewCategory = (item) => async (dispatch, getState) =>{
   });
 };
 
-// export const deleteCategory = (toys, id) => {
-//   return {
-//     type: DELETE_CATEGORY,
-//     toys,
-//     id,
-//   };
-// };
-
 export const updateFormCategory = (update) => {
     return {
       type: UPDATE_FORM_CATEGORY,
       update,
     };
   };
-
-  // export const addNewCategory = (category) => {
-  //   return {
-  //     type: ADD_NEW_CATEGORY,
-  //     category,
-  //   };
-  // };

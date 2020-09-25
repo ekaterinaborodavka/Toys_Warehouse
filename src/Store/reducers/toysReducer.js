@@ -11,20 +11,13 @@ export const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-      case GET_TOYS: {
+      case GET_TOYS:
+        case ADD_ITEM: {
         return {
           ...state,
           list: action.subtype === 'success' ? action.list : state.toys,
           loading: action.subtype === 'loading',
           error: action.subtype === 'failed' ? action.error.message : null,
-        };
-      }
-      case ADD_ITEM: {
-        return {
-          ...state,
-          // list: action.subtype === 'success' ? action.list : state.toys,
-          // loading: action.subtype === 'loading',
-          // error: action.subtype === 'failed' ? action.error.message : null,
         };
       }
       case GET_TRANSACTIONS: {

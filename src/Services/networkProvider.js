@@ -33,9 +33,12 @@ export const create = async (resource, item, token) => {
         'Authorization': `Bearer ${token}`
       }, body: JSON.stringify(item), method: 'POST' } );
   let data ={};
-  if (result.status===200) {
+  if (result.ok) {
     data = await result.json();
-  } else if (!result.ok) {
+    console.log('DATA', data, 'ITEM', item);
+  } else{
+    console.log('DATA', data, 'ITEM', item);
+    console.log('RESULT', result);
     throw new Error('Something went wrong');
   }
   return data

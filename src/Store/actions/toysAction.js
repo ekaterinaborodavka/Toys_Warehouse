@@ -57,35 +57,31 @@ export const getToys = () => {
   export const addItem = (item) => async (dispatch, getState) =>{
     const state = getState();
     const token = getState().login.token
+    const toysList = state.toys.list
+    const categoriesList = state.categories.categoriesList
+    const category = categoriesList.filter((el) => el.name === item.category)
+    let toyId = toysList.length
+    delete item.category;
+    const newToy = {id: `${++toyId}`, categoryId: category[0].id , price: 100, totalCost: 100, ...item }
+
     dispatch({
       type: ADD_ITEM,
       subtype: 'loading',
     });
-    addItemResource(item, token).then((res) => {
-      console.log(res);
-      // const newElem = {active: false, edit: false, ...res.data};
-      // const newList = [...state.goods.list, newElem];
+    addItemResource(newToy, token).then((res) => {
+      const newList = [...state.toys.list, res];
       dispatch({
         type: ADD_ITEM,
         subtype: 'success',
-        // list: newList,
+        list: newList,
       });
-    }, (addItemError) => {
-      dispatch({
-        type: ADD_ITEM,
-        subtype: 'failed',
-        error: addItemError.message,
-      });
-    });
+    })
+    dispatch({
+      type: ADD_ITEM,
+      subtype: 'failed',
+      error: { message: 'Something went wrong' },
+    });;
   };
-
-  // export const addItem = (list, item) => {
-  //   return {
-  //     type: ADD_ITEM,
-  //     list,
-  //     item,
-  //   };
-  // };
 
   export const buyItem = (list, item) => {
     return {
