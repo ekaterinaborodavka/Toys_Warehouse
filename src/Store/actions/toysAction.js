@@ -38,7 +38,6 @@ export const getToys = () => {
       });
       if(token){
         getResource('transactions',token).then((res) => {
-          console.log(res.transactions);
           dispatch({
             type: GET_TRANSACTIONS,
             subtype: 'success',

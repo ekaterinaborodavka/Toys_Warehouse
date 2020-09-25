@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react'
 import {v4 as uuidv4} from 'uuid';
-import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import './TransactionList.css'
 

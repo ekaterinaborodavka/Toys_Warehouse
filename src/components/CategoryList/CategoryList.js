@@ -9,12 +9,13 @@ import './CategoryList.css'
 export default function CategoryList() {
     const toys = useSelector((state) => state.toys.list, shallowEqual);
     const categories = useSelector((state) => state.categories.categoriesList, shallowEqual);
+    const error = useSelector((state) => state.categories.error, shallowEqual);
     const newCategory = useSelector((state) => state.categories.newCategory, shallowEqual);
     const dispatch = useDispatch();
 
     const deleteICategory = useCallback(
         (id) => {
-          dispatch(categoriesActions.deleteCategory(toys, id));
+          dispatch(categoriesActions.deleteCategory(id));
         }, [dispatch],
     );
 
@@ -35,7 +36,8 @@ export default function CategoryList() {
     return (
         <React.Fragment>
             <h1 className='Title'>Toys Warehouse</h1>
-            <h2 className='CategoryList_Title'>Categoryes</h2>
+            <h2 className='CategoryList_Title'>Categories</h2>
+            {error && <div className='Wrong' >ERROR: {error}</div>}
             <div className='CategoryList'>
                 {Array.isArray(categories) && categories.map( (cat) => {
                     return (

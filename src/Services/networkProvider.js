@@ -27,7 +27,6 @@ export const authorized = async (resource, item) => {
 };
 
 export const create = async (resource, item, token) => {
-  console.log(resource, token, item);
   const result = await fetch( [endpoint, resource].join('/'),
       { headers:{
         'content-type': 'application/json',
@@ -39,7 +38,14 @@ export const create = async (resource, item, token) => {
   } else if (!result.ok) {
     throw new Error('Something went wrong');
   }
-  return {
-    data,
-  };
+  return data
+};
+
+export const remove = async (resource, id, token) => {
+  const result = await fetch( [endpoint, resource, id].join('/'),
+      { headers:{
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }, method: 'DELETE' } );
+  return result;
 };

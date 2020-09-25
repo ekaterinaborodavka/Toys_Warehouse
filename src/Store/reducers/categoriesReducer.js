@@ -3,12 +3,16 @@ import { removeCategory, addCategory } from '../../Utils/toysUtils'
 
 export const initialState = {
     categoriesList: [],
-    newCategory: ''
+    newCategory: '',
+    error: null,
+    loading: null
   };
 
   const reducer = (state = initialState, action) => {
     switch (action.type) {
-      case GET_CATEGORY: {
+      case GET_CATEGORY: 
+      case DELETE_CATEGORY:
+      case ADD_NEW_CATEGORY:{
         return {
           ...state,
           categoriesList: action.subtype === 'success' ? action.list : state.categoriesList,
@@ -16,24 +20,10 @@ export const initialState = {
           error: action.subtype === 'failed' ? action.error.message : null,
         };
       }
-      case DELETE_CATEGORY: {
-        const newCategoryList = removeCategory(action.toys, state.categoriesList, action.id)
-        return{
-            ...state,
-            categoriesList: newCategoryList
-        }
-      }
       case UPDATE_FORM_CATEGORY: {
         return{
             ...state,
             newCategory: action.update
-        }
-      }
-      case ADD_NEW_CATEGORY: {
-        const newCategoryList = addCategory(state.categoriesList, action.category)
-        return{
-            ...state,
-            categoriesList: newCategoryList 
         }
       }
       default:
