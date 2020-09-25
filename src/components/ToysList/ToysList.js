@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect }  from 'react'
+import React, { useCallback }  from 'react'
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -15,10 +15,6 @@ export default function ToysList() {
     const error = useSelector((state) => state.toys.error, shallowEqual);
     const isLoading = useSelector((state) => state.toys.loading,
         shallowEqual);
-console.log(toys);
-    // useEffect(() => {
-    //         dispatch(toysActions.getToys());
-    // }, []);
 
     const goPages = useCallback(
         (e) => {

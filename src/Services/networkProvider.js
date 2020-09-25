@@ -25,3 +25,21 @@ export const authorized = async (resource, item) => {
         return res.accessToken;
       });
 };
+
+export const create = async (resource, item, token) => {
+  console.log(resource, token, item);
+  const result = await fetch( [endpoint, resource].join('/'),
+      { headers:{
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }, body: JSON.stringify(item), method: 'POST' } );
+  let data ={};
+  if (result.status===200) {
+    data = await result.json();
+  } else if (!result.ok) {
+    throw new Error('Something went wrong');
+  }
+  return {
+    data,
+  };
+};

@@ -29,9 +29,9 @@ export default function Incoming() {
     const onFormSubmit = useCallback(
         (e) => {
           e.preventDefault();
-          if(incoming && form.title && form.category){
-            dispatch(toysActions.addItem(toys, form))
-          }else if( form.title && form.category ){
+          if(incoming && form.name && form.category){
+            dispatch(toysActions.addItem(form))
+          }else if( form.name && form.category ){
             dispatch(toysActions.buyItem(toys, form))
           }else{
             alert('Ведите категорию и название игрушки')

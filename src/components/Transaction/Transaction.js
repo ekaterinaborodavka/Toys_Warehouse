@@ -17,7 +17,7 @@ export default function Transaction() {
                     return (
                     <TransactionList
                         transaction={ transaction }
-                        items = { transaction.items }
+                        items = { transaction.toys }
                         key={ transaction.id }
                     />
                     )

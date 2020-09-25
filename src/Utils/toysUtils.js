@@ -44,7 +44,8 @@ export const createNewItem = (toys, ind, newItem) => {
 export const addNewItem = (toys, item) => {
   const ind = findItemInd(toys, item)
   const oldItem = toys[ind]
-  if (oldItem && oldItem.title === item.title && oldItem.category === item.category){
+  if (oldItem && oldItem.name === item.name && oldItem.category === item.category){
+    console.log(oldItem.category);
     const newItem = { ...oldItem, quantity: Number(oldItem.quantity)+Number(item.quantity)}
     return createNewItem(toys, ind, newItem)
   }else {
@@ -58,7 +59,7 @@ export const buyItem = (toys, item) => {
   if(oldItem && oldItem.quantity-item.quantity < 0){
     alert('Такого количества нет на складе')
     return toys
-  }else if(oldItem && oldItem.title === item.title && oldItem.category === item.category ){
+  }else if(oldItem && oldItem.name === item.name && oldItem.category === item.category ){
     const newItem = { ...oldItem, quantity: oldItem.quantity-item.quantity}
     return createNewItem(toys, ind, newItem)
   } else {

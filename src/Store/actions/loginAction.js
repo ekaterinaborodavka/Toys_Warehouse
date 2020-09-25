@@ -23,6 +23,7 @@ export const login = (item) => {
     }).then(() => {
       dispatch(toysActions.getToys());
       dispatch(categoriesActions.getCategory());
+      dispatch(toysActions.getTransactions());
     });
       dispatch({
         type: LOGIN,

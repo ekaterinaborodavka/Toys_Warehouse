@@ -1,7 +1,7 @@
 import { UPDATE_FORM_TOY, CLEAR_FORM, ADD_NEW_CATEGORY, ADD_ITEM, BUY_ITEM } from '../types/types';
 
 export const initialState = {
-    title: '',
+    name: '',
     quantity: '',
     description: '',
     category: '',

@@ -1,8 +1,7 @@
 import { getList as getCategoriesResource } from '../../Resources/toys';
 import { GET_CATEGORY, DELETE_CATEGORY, UPDATE_FORM_CATEGORY, ADD_NEW_CATEGORY, CLEAR_FORM } from '../types/types';
 
-export const getCategory = () => {
-  return async (dispatch, getState) => {
+export const getCategory = () => async (dispatch, getState) => {
     const token = getState().login.token
 
     dispatch({
@@ -23,7 +22,6 @@ export const getCategory = () => {
         subtype: 'failed',
         error: { message: 'Something went wrong' },
       });
-  };
 };
 
 export const deleteCategory = (toys, id) => {
