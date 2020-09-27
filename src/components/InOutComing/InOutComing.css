@@ -31,16 +31,6 @@
     margin: 2% 2% 2% 50%;
 }
 
-.Form_button_plus{
-    border: 1px solid transparent;
-    background-color: transparent;
-    margin: 1%;
-}
-.Form_button_plus i{
-    font-size: 1.7rem;
-    color: teal;
-    margin-left: 50%;
-}
 
 .Form_button{
     width: 10%;
@@ -54,4 +44,11 @@
 }
 .Form_button:hover{
     color: black;
+}
+
+.InOut_Coming_Inputs_Wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin: 0.5%;
 }

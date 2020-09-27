@@ -1,10 +1,8 @@
 import React, { useCallback, useState } from 'react'
 import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import {v4 as uuidv4} from 'uuid';
 
-// import CategoryToys from '../CategoryToys/CategoryToys'
-import InOutComingInputs from '../InOutComingInputs/InOutComingInputs';
+import CategoryToys from '../CategoryToys/CategoryToys'
 import * as formActions from '../../Store/actions/formActions';
 import * as toysActions from '../../Store/actions/toysAction';
 
@@ -17,14 +15,7 @@ export default function Incoming() {
     const incoming = useSelector((state) => state.toys.incoming, shallowEqual);
     const dispatch = useDispatch();
     const history = useHistory();
-    let [countInput, setCountInput] = useState(0)
-    let arrInput = []
 
-    const onAddInput = useCallback(
-        (e) => {
-         setCountInput(countInput++)
-        }, [],
-    );
 
     const onFormSubmit = useCallback(
         (e) => {
@@ -48,44 +39,35 @@ export default function Incoming() {
         }, [dispatch],
     );
 
-    for (let i=0; i<countInput; i++){
-        arrInput.push(<InOutComingInputs 
-            categories={ categories }
-            key = { uuidv4() }
-            toys={ toys }
-            incoming= { incoming }
-            onInputComingChange={ onInputComingChange }/>)
-    }
-
     return (
         <React.Fragment>
         <h1 className='Title'>Toys Warehouse</h1>
         <h2 className='InOutcoming_Title'>{ incoming? 'Incoming': 'Outcoming'}</h2>
         <div className='InOutcoming_container'>
             <form className='InOutcoming_form' onSubmit={ onFormSubmit }>
-                <InOutComingInputs 
-                    categories={ categories }
-                    toys={ toys }
-                    incoming= { incoming }
-                    onInputComingChange={ onInputComingChange }/>
-                    { arrInput }
-                {/* <CategoryToys categories={ categories } name={ 'category' } />
-                <CategoryToys toys={ toys } name={ 'title' }/>
-                <input 
-                    className='Quantity_Toys' 
-                    name='quantity' 
-                    placeholder='quantity' />
-                {incoming ? <input 
-                    className='Description_Toys' 
-                    name='description' 
-                    placeholder='description' /> : null} */}
+                <div className='InOut_Coming_Inputs_Wrapper'>
+                    <CategoryToys 
+                        categories={ categories } 
+                        name={ 'category' }
+                        onInputComingChange={ onInputComingChange } />
+                    <CategoryToys 
+                        toys={ toys } 
+                        name={ 'name' }
+                        onInputComingChange={ onInputComingChange }/>
+                    <input 
+                        required
+                        className='Quantity_Toys' 
+                        name='quantity' 
+                        placeholder='quantity'
+                        type='number'
+                        onChange={ onInputComingChange } />
+                    {incoming ? <input 
+                        className='Description_Toys' 
+                        name='description' 
+                        placeholder='description'
+                        onChange={ onInputComingChange } /> : null}
+                </div>
                 <div className='Form_buttons_container'>
-                    <div>
-                        <button type='button' className='Form_button_plus'
-                            onClick={ onAddInput }>
-                            <i className='fa fa-plus-square-o'></i>
-                        </button>
-                    </div>
                     <div>
                         {incoming ? 
                             <button className='Form_button'>Add</button> 
