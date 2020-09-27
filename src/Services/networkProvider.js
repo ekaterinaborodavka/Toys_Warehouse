@@ -35,13 +35,25 @@ export const create = async (resource, item, token) => {
   let data ={};
   if (result.ok) {
     data = await result.json();
-    console.log('DATA', data, 'ITEM', item);
   } else{
-    console.log('DATA', data, 'ITEM', item);
-    console.log('RESULT', result);
     throw new Error('Something went wrong');
   }
   return data
+};
+
+export const updateMerg = async (resource, id, item, token) => {
+  const result = await fetch( [endpoint, resource, id].join('/'),
+      { headers:{
+        'content-type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }, body: JSON.stringify(item), method: 'PATCH' } );
+      let data ={};
+      if (result.ok) {
+        data = await result.json();
+      } else{
+        throw new Error('Something went wrong');
+      }
+      return data
 };
 
 export const remove = async (resource, id, token) => {

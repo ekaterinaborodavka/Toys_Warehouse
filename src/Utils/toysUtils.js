@@ -1,5 +1,9 @@
 import {v4 as uuidv4} from 'uuid';
 
+export const findItemInd = (toys, item) => {
+  return toys.findIndex((el) => el.name === item.name && el.category.id === item.categoryId )
+}
+
 export const removeCategory = (toys, categories, id) => {
   const cat = categories.filter((e) => e.id === id)
   const catItem = toys.filter((e) => e.category === cat[0].name)
@@ -28,10 +32,6 @@ export const newItem = (item) => {
       ...item
     };
 };
-
-export const findItemInd = (toys, item) => {
-  return toys.findIndex((el) => el.title === item.title && el.category === item.category )
-}
 
 export const createNewItem = (toys, ind, newItem) => {
   return [

@@ -12,7 +12,8 @@ export const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
       case GET_TOYS:
-        case ADD_ITEM: {
+        case ADD_ITEM: 
+          case BUY_ITEM:{
         return {
           ...state,
           list: action.subtype === 'success' ? action.list : state.toys,
@@ -26,20 +27,6 @@ const reducer = (state = initialState, action) => {
           transaction: action.subtype === 'success' ? action.transaction : state.transaction,
           loading: action.subtype === 'loading',
           error: action.subtype === 'failed' ? action.error.message : null,
-        };
-      }
-      case ADD_ITEM: {
-        const newList = addNewItem(action.list, action.item);
-        return {
-          ...state,
-          list: newList
-        };
-      }
-      case BUY_ITEM: {
-        const newList = buyItem(action.list, action.item);
-        return {
-          ...state,
-          list: newList
         };
       }
       case CHANGE_INCOMIN: {

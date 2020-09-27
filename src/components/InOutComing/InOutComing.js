@@ -32,7 +32,7 @@ export default function Incoming() {
           if(incoming && form.name && form.category){
             dispatch(toysActions.addItem(form))
           }else if( form.name && form.category ){
-            dispatch(toysActions.buyItem(toys, form))
+            dispatch(toysActions.buyItem(form))
           }else{
             alert('Ведите категорию и название игрушки')
           }

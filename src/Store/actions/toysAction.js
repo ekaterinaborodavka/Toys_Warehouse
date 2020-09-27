@@ -1,6 +1,8 @@
 import { getList as getResource, 
-        createItem as addItemResource } from '../../Resources/toys';
+        createItem as addItemResource,
+        updateMergItem as updateItemResource} from '../../Resources/toys';
 import { GET_TOYS, GET_TRANSACTIONS, CHANGE_INCOMIN, ADD_ITEM, BUY_ITEM } from '../types/types';
+import { findItemInd } from '../../Utils/toysUtils'
 
 export const getToys = () => {
     return async (dispatch, getState) => {
@@ -63,19 +65,38 @@ export const getToys = () => {
     let toyId = toysList.length
     delete item.category;
     const newToy = {id: `${++toyId}`, categoryId: category[0].id , price: 100, totalCost: 100, ...item }
+    const ind = findItemInd(toysList, newToy)
+    const updateItem = toysList[ind]
+    const toyUpdate = {...newToy, quantity: Number(newToy.quantity)+Number(updateItem.quantity)}
+    console.log(updateItem);
 
     dispatch({
       type: ADD_ITEM,
       subtype: 'loading',
     });
-    addItemResource(newToy, token).then((res) => {
-      const newList = [...state.toys.list, res];
-      dispatch({
-        type: ADD_ITEM,
-        subtype: 'success',
-        list: newList,
-      });
-    })
+    if(ind === -1){
+      addItemResource(newToy, token).then((res) => {
+        const newList = [...state.toys.list, res];
+        dispatch({
+          type: ADD_ITEM,
+          subtype: 'success',
+          list: newList,
+        });
+      })
+    }else{
+      updateItemResource(updateItem.id, toyUpdate, token).then((res) => {
+        console.log('UPDATETOY', toyUpdate);
+        console.log('RES',res);
+        const newList = [...toysList.slice(0, ind), 
+                          res, 
+                          ...toysList.slice(ind+1)];
+        dispatch({
+          type: ADD_ITEM,
+          subtype: 'success',
+          list: newList,
+        });
+      })
+    }
     dispatch({
       type: ADD_ITEM,
       subtype: 'failed',
@@ -83,12 +104,45 @@ export const getToys = () => {
     });;
   };
 
-  export const buyItem = (list, item) => {
-    return {
+
+  export const buyItem = (item) => async (dispatch, getState) =>{
+    const state = getState();
+    const token = getState().login.token
+    const toysList = state.toys.list
+    const categoriesList = state.categories.categoriesList
+    const category = categoriesList.filter((el) => el.name === item.category)
+    let toyId = toysList.length
+    delete item.category;
+    const newToy = {id: `${++toyId}`, categoryId: category[0].id , price: 100, totalCost: 100, ...item }
+    const ind = findItemInd(toysList, newToy)
+    const updateItem = toysList[ind]
+    const toyUpdate = {...newToy, quantity: Number(updateItem.quantity)-Number(newToy.quantity)}
+    console.log('ITEM', item);
+    console.log('NEWTOY',newToy);
+    console.log('UPDATEITEM',updateItem);
+    console.log('ID',toyId);
+    console.log('IND',ind);
+    dispatch({
       type: BUY_ITEM,
-      list,
-      item,
-    };
+      subtype: 'loading',
+    });
+    if(ind === 1){
+      updateItemResource(updateItem.id, toyUpdate, token).then((res) => {
+        const newList = [...toysList.slice(0, ind), 
+                          res, 
+                          ...toysList.slice(ind+1)];
+        dispatch({
+          type: BUY_ITEM,
+          subtype: 'success',
+          list: newList,
+        });
+      })
+    }
+    dispatch({
+      type: BUY_ITEM,
+      subtype: 'failed',
+      error: { message: 'This toy is not in stock' },
+    });;
   };
 
   export const changeIncomin = (bool) => {
