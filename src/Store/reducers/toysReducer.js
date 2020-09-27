@@ -1,5 +1,4 @@
 import { GET_TOYS, GET_TRANSACTIONS, CHANGE_INCOMIN, ADD_ITEM, BUY_ITEM } from '../types/types';
-import { addNewItem, buyItem } from '../../Utils/toysUtils'
 
 export const initialState = {
     list: [],

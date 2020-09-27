@@ -2,7 +2,7 @@ import { getList as getResource,
         createItem as addItemResource,
         updateMergItem as updateItemResource} from '../../Resources/toys';
 import { GET_TOYS, GET_TRANSACTIONS, CHANGE_INCOMIN, ADD_ITEM, BUY_ITEM } from '../types/types';
-import { findItemInd } from '../../Utils/toysUtils'
+import { findItemInd, newItem, createNewList } from '../../Utils/toysUtils'
 
 export const getToys = () => {
     return async (dispatch, getState) => {
@@ -57,18 +57,16 @@ export const getToys = () => {
   };
 
   export const addItem = (item) => async (dispatch, getState) =>{
+    console.log(item);
     const state = getState();
-    const token = getState().login.token
+    const token = state.login.token
     const toysList = state.toys.list
     const categoriesList = state.categories.categoriesList
-    const category = categoriesList.filter((el) => el.name === item.category)
-    let toyId = toysList.length
-    delete item.category;
-    const newToy = {id: `${++toyId}`, categoryId: category[0].id , price: 100, totalCost: 100, ...item }
+    const newToy = newItem(toysList, item, categoriesList)
     const ind = findItemInd(toysList, newToy)
     const updateItem = toysList[ind]
     const toyUpdate = {...newToy, quantity: Number(newToy.quantity)+Number(updateItem.quantity)}
-    console.log(updateItem);
+    console.log(item);
 
     dispatch({
       type: ADD_ITEM,
@@ -87,9 +85,7 @@ export const getToys = () => {
       updateItemResource(updateItem.id, toyUpdate, token).then((res) => {
         console.log('UPDATETOY', toyUpdate);
         console.log('RES',res);
-        const newList = [...toysList.slice(0, ind), 
-                          res, 
-                          ...toysList.slice(ind+1)];
+        const newList = createNewList(toysList, ind, res)
         dispatch({
           type: ADD_ITEM,
           subtype: 'success',
@@ -107,30 +103,20 @@ export const getToys = () => {
 
   export const buyItem = (item) => async (dispatch, getState) =>{
     const state = getState();
-    const token = getState().login.token
+    const token = state.login.token
     const toysList = state.toys.list
     const categoriesList = state.categories.categoriesList
-    const category = categoriesList.filter((el) => el.name === item.category)
-    let toyId = toysList.length
-    delete item.category;
-    const newToy = {id: `${++toyId}`, categoryId: category[0].id , price: 100, totalCost: 100, ...item }
+    const newToy = newItem(toysList, item, categoriesList)
     const ind = findItemInd(toysList, newToy)
     const updateItem = toysList[ind]
-    const toyUpdate = {...newToy, quantity: Number(updateItem.quantity)-Number(newToy.quantity)}
-    console.log('ITEM', item);
-    console.log('NEWTOY',newToy);
-    console.log('UPDATEITEM',updateItem);
-    console.log('ID',toyId);
-    console.log('IND',ind);
+    const toyUpdate = {...item, description: updateItem.description, quantity: Number(updateItem.quantity)-Number(item.quantity)}
     dispatch({
       type: BUY_ITEM,
       subtype: 'loading',
     });
-    if(ind === 1){
+    if(ind >= 0){
       updateItemResource(updateItem.id, toyUpdate, token).then((res) => {
-        const newList = [...toysList.slice(0, ind), 
-                          res, 
-                          ...toysList.slice(ind+1)];
+        const newList = createNewList(toysList, ind, res)
         dispatch({
           type: BUY_ITEM,
           subtype: 'success',
