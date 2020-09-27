@@ -6,8 +6,11 @@ export const getList = async (list, token) => {
 };
 
 export const createItem = (item = {}, token) => {
-  console.log(item);
   return create('toys', item, token);
+};
+
+export const createTransaction= (item = {}, token) => {
+  return create('transactions', item, token);
 };
 
 export const updateMergItem = (id, item = {}, token) => {

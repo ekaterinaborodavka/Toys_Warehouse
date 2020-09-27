@@ -1,4 +1,4 @@
-import { GET_TOYS, GET_TRANSACTIONS, CHANGE_INCOMIN, ADD_ITEM, BUY_ITEM } from '../types/types';
+import { GET_TOYS, GET_TRANSACTIONS, ADD_TRANSACTION, CHANGE_INCOMIN, ADD_ITEM, BUY_ITEM } from '../types/types';
 
 export const initialState = {
     list: [],
@@ -20,7 +20,8 @@ const reducer = (state = initialState, action) => {
           error: action.subtype === 'failed' ? action.error.message : null,
         };
       }
-      case GET_TRANSACTIONS: {
+      case GET_TRANSACTIONS: 
+        case ADD_TRANSACTION:{
         return {
           ...state,
           transaction: action.subtype === 'success' ? action.transaction : state.transaction,

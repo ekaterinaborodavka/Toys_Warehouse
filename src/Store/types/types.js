@@ -11,3 +11,4 @@ export const BUY_ITEM = 'BUY_ITEM';
 export const UPDATE_FORM_TOY = 'UPDATE_FORM_TOY';
 export const GET_CATEGORY = 'GET_CATEGORY';
 export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
+export const ADD_TRANSACTION = 'ADD_TRANSACTION';

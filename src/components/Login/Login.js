@@ -18,7 +18,7 @@ export default function Login() {
     const login = useCallback(
         () => {
             dispatch(loginActions.login({email, password}))
-                    history.push('/toyslist')
+            history.push('/toyslist')
     }, [history, password]
     )
 

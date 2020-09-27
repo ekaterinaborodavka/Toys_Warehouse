@@ -1,8 +1,9 @@
 import { getList as getResource, 
         createItem as addItemResource,
-        updateMergItem as updateItemResource} from '../../Resources/toys';
-import { GET_TOYS, GET_TRANSACTIONS, CHANGE_INCOMIN, ADD_ITEM, BUY_ITEM } from '../types/types';
-import { findItemInd, newItem, createNewList } from '../../Utils/toysUtils'
+        updateMergItem as updateItemResource,
+        createTransaction as addTransactionResource} from '../../Resources/toys';
+import { GET_TOYS, GET_TRANSACTIONS, CHANGE_INCOMIN, ADD_ITEM, BUY_ITEM, ADD_TRANSACTION } from '../types/types';
+import { findItemInd, newItem, createNewList, newTransaction } from '../../Utils/toysUtils'
 
 export const getToys = () => {
     return async (dispatch, getState) => {
@@ -57,16 +58,16 @@ export const getToys = () => {
   };
 
   export const addItem = (item) => async (dispatch, getState) =>{
-    console.log(item);
     const state = getState();
     const token = state.login.token
     const toysList = state.toys.list
     const categoriesList = state.categories.categoriesList
+    const username = state.login.username
     const newToy = newItem(toysList, item, categoriesList)
     const ind = findItemInd(toysList, newToy)
     const updateItem = toysList[ind]
-    const toyUpdate = {...newToy, quantity: Number(newToy.quantity)+Number(updateItem.quantity)}
-    console.log(item);
+    const transactionList = state.toys.transaction
+    const trans = newTransaction(transactionList, newToy, username, 'incoming')
 
     dispatch({
       type: ADD_ITEM,
@@ -80,17 +81,18 @@ export const getToys = () => {
           subtype: 'success',
           list: newList,
         });
+        dispatch(addTransaction(trans))
       })
     }else{
+      const toyUpdate = {...newToy, quantity: Number(newToy.quantity)+Number(updateItem.quantity)}
       updateItemResource(updateItem.id, toyUpdate, token).then((res) => {
-        console.log('UPDATETOY', toyUpdate);
-        console.log('RES',res);
         const newList = createNewList(toysList, ind, res)
         dispatch({
           type: ADD_ITEM,
           subtype: 'success',
           list: newList,
         });
+        dispatch(addTransaction(trans))
       })
     }
     dispatch({
@@ -109,20 +111,24 @@ export const getToys = () => {
     const newToy = newItem(toysList, item, categoriesList)
     const ind = findItemInd(toysList, newToy)
     const updateItem = toysList[ind]
-    const toyUpdate = {...item, description: updateItem.description, quantity: Number(updateItem.quantity)-Number(item.quantity)}
     dispatch({
       type: BUY_ITEM,
       subtype: 'loading',
     });
     if(ind >= 0){
-      updateItemResource(updateItem.id, toyUpdate, token).then((res) => {
-        const newList = createNewList(toysList, ind, res)
-        dispatch({
-          type: BUY_ITEM,
-          subtype: 'success',
-          list: newList,
-        });
-      })
+      const toyUpdate = {...item, description: updateItem.description, quantity: Number(updateItem.quantity)-Number(item.quantity)}
+      if(toyUpdate.quantity > 0){
+        updateItemResource(updateItem.id, toyUpdate, token).then((res) => {
+          const newList = createNewList(toysList, ind, res)
+          dispatch({
+            type: BUY_ITEM,
+            subtype: 'success',
+            list: newList,
+          });
+        })
+      }else{
+        alert('There is no such quantity in stock')
+      }
     }
     dispatch({
       type: BUY_ITEM,
@@ -138,3 +144,27 @@ export const getToys = () => {
     };
   };
 
+  export const addTransaction = (item) => async (dispatch, getState) =>{
+    console.log('TRANSITEM',item);
+    const state = getState();
+    const token = state.login.token
+
+    dispatch({
+      type: ADD_TRANSACTION,
+      subtype: 'loading',
+    });
+    addTransactionResource(item, token).then((res) => {
+      console.log('RESTRANS',res);
+      const newList = [...state.toys.transaction, res];
+      dispatch({
+        type: ADD_TRANSACTION,
+        subtype: 'success',
+        transaction: newList,
+      });
+    })
+    dispatch({
+      type: ADD_TRANSACTION,
+      subtype: 'failed',
+      error: { message: 'Something went wrong' },
+    });;
+  };

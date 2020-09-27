@@ -12,6 +12,12 @@ export const newItem = (toys, item, categoriesList) => {
   return newToy
 };
 
+export const newTransaction = (transactions, item, username, type) => {
+  let transId = transactions.length
+  const newTrans = {id: `${++transId}`, date: new Date().toISOString(), userId: username, type: type, toys: [item] }
+  return newTrans
+};
+
 export const createNewList = (toys, ind, newItem) => {
   return [
     ...toys.slice(0, ind),

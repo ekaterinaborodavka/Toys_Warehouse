@@ -9,8 +9,9 @@ export default function CategoryToys(props) {
     <select className='Category_Toys'
       required
       onChange={ onInputComingChange }
-      name={ name }>{
-        name === 'category' ? (Array.isArray(categories) && categories.map(({ id, name }) => (
+      name={ name }>
+        <option hidden>{ name } toy</option>
+        {name === 'category' ? (Array.isArray(categories) && categories.map(({ id, name }) => (
           <option key={ id } value={ name }>{ name }</option>
         ))) : (Array.isArray(toys) && toys.map(({ id, name }) => (
           <option key={ id } value={ name }>{ name }</option>

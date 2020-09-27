@@ -25,7 +25,7 @@ export default function Incoming() {
           }else if( form.name && form.category ){
             dispatch(toysActions.buyItem(form))
           }else{
-            alert('Ведите категорию и название игрушки')
+            alert('Lead the category and name of the toy')
           }
           history.push('/toyslist')
         }, [dispatch, form],

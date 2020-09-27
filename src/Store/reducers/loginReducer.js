@@ -2,7 +2,7 @@ import { LOGIN, UPDATE_FORM_LOGIN } from '../types/types';
 
 export const initialState = {
     username: '',
-    token: '',
+    token: localStorage.getItem('token'),
     form: {},
     loading: null,
     error: null
