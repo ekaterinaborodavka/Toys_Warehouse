@@ -1,45 +1,53 @@
-import { getList as getCategoriesResource, removeCategory, createCategory } from '../../Resources/toys';
-import { GET_CATEGORY, DELETE_CATEGORY, UPDATE_FORM_CATEGORY, ADD_NEW_CATEGORY, CLEAR_FORM } from '../types/types';
+import { getList as getCategoriesResource,
+  removeCategory,
+  createCategory } from '../../Resources/toys';
+import { GET_CATEGORY,
+  DELETE_CATEGORY,
+  UPDATE_FORM_CATEGORY,
+  ADD_NEW_CATEGORY} from '../types/types';
 
 export const getCategory = () => async (dispatch, getState) => {
-    const token = getState().login.token
+  const token = getState().login.token;
 
+  dispatch({
+    type: GET_CATEGORY,
+    subtype: 'loading',
+  });
+  getCategoriesResource('categories', token).then((res) => {
     dispatch({
       type: GET_CATEGORY,
-      subtype: 'loading',
+      subtype: 'success',
+      list: res.categories,
     });
-
-    getCategoriesResource('categories' ,token).then((res) => {
-        dispatch({
-          type: GET_CATEGORY,
-          subtype: 'success',
-          list: res.categories,
-        });
-      });
-
-      dispatch({
-        type: GET_CATEGORY,
-        subtype: 'failed',
-        error: { message: 'Something went wrong' },
-      });
+  });
+  dispatch({
+    type: GET_CATEGORY,
+    subtype: 'failed',
+    error: { message: 'Something went wrong' },
+  });
 };
 
 export const deleteCategory = (id) => async (dispatch, getState) =>{
   const state = getState();
-  const token = getState().login.token
+  const token = state.login.token;
+  const toysList = state.toys.list;
+  const categoriesList = state.categories.categoriesList;
+  const cat = categoriesList.filter((e) => e.id === id);
+  const catItem = toysList.filter((e) => e.category.name === cat[0].name);
   dispatch({
     type: DELETE_CATEGORY,
     subtype: 'loading',
   });
-  removeCategory(id, token).then((res)=> {
-    console.log('RES', res, 'ID', id);
-    const newList = state.categories.categoriesList.filter((e) => e.id !== id);
-    dispatch({
-      type: DELETE_CATEGORY,
-      subtype: 'success',
-      list: newList
+  if (catItem.length === 0 || catItem[0].quantity === 0) {
+    removeCategory(id, token).then(()=> {
+      const newList = categoriesList.filter((e) => e.id !== id);
+      dispatch({
+        type: DELETE_CATEGORY,
+        subtype: 'success',
+        list: newList,
+      });
     });
-  });
+  }
   dispatch({
     type: DELETE_CATEGORY,
     subtype: 'failed',
@@ -49,17 +57,16 @@ export const deleteCategory = (id) => async (dispatch, getState) =>{
 
 export const addNewCategory = (item) => async (dispatch, getState) =>{
   const state = getState();
-  const token = getState().login.token
-  const catList = state.categories.categoriesList
-  let catId = catList.length
-  const newCat = {id: `${++catId}` , name:item }
+  const token = state.login.token;
+  const catList = state.categories.categoriesList;
+  let catId = catList.length;
+  const newCat = {id: `${++catId}`, name: item };
 
   dispatch({
     type: ADD_NEW_CATEGORY,
     subtype: 'loading',
   });
   createCategory(newCat, token).then((res) => {
-    console.log(res);
     const newList = [...catList, res];
     dispatch({
       type: ADD_NEW_CATEGORY,
@@ -76,8 +83,8 @@ export const addNewCategory = (item) => async (dispatch, getState) =>{
 };
 
 export const updateFormCategory = (update) => {
-    return {
-      type: UPDATE_FORM_CATEGORY,
-      update,
-    };
+  return {
+    type: UPDATE_FORM_CATEGORY,
+    update,
   };
+};

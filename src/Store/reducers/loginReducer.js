@@ -1,11 +1,11 @@
 import { LOGIN, UPDATE_FORM_LOGIN } from '../types/types';
 
 export const initialState = {
-    username: '',
-    token: localStorage.getItem('token'),
-    form: {},
-    loading: null,
-    error: null
+  username: '',
+  token: localStorage.getItem('token'),
+  form: {},
+  loading: null,
+  error: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -13,10 +13,10 @@ const reducer = (state = initialState, action) => {
     case LOGIN: {
       return {
         ...state,
-        token: action.subtype === 'success' ? action.token : null, 
+        token: action.subtype === 'success' ? action.token : null,
         username: action.subtype === 'success' ? action.username : null,
-        loading: action.subtype === 'loading', 
-        error: action.subtype === 'failed' ? action.error : null,  
+        loading: action.subtype === 'loading',
+        error: action.subtype === 'failed' ? action.error : null,
       };
     }
     case UPDATE_FORM_LOGIN: {
@@ -24,8 +24,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         form: {
           ...state.form,
-          ...action.login
-        } 
+          ...action.login,
+        },
       };
     }
     default:

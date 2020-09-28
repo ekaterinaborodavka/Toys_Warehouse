@@ -1,8 +1,12 @@
-import { get, authorized, create, remove, updateMerg } from '../Services/networkProvider';
+import { get,
+  authorized,
+  create,
+  remove,
+  updateMerg } from '../Services/networkProvider';
 
 export const getList = async (list, token) => {
   const res = await get(list, token);
-  return res
+  return res;
 };
 
 export const createItem = (item = {}, token) => {

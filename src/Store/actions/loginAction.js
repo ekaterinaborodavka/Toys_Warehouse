@@ -10,32 +10,32 @@ export const login = (item) => {
       subtype: 'loading',
     });
     createAuthorized(item).then((res) => {
-      if(res){
-        localStorage.setItem('token', res)
+      if (res) {
+        localStorage.setItem('token', res);
         dispatch({
           type: LOGIN,
           subtype: 'success',
           token: res,
-          username: item.email
+          username: item.email,
         });
       }
-      return res
+      return res;
     }).then(() => {
       dispatch(toysActions.getToys());
       dispatch(categoriesActions.getCategory());
       dispatch(toysActions.getTransactions());
     });
-      dispatch({
-        type: LOGIN,
-        subtype: 'failed',
-        error: { message: 'Password or login incorrect' },
-      });
+    dispatch({
+      type: LOGIN,
+      subtype: 'failed',
+      error: { message: 'Password or login incorrect' },
+    });
   };
 };
 
 export const updateFormLogin = (login) => {
   return {
     type: UPDATE_FORM_LOGIN,
-    login
+    login,
   };
 };

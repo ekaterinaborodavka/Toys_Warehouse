@@ -10,5 +10,5 @@ export default combineReducers({
   login,
   toys,
   categories,
-  form
+  form,
 });

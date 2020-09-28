@@ -6,9 +6,9 @@ export const initWithEndpoint = (url) => {
 
 
 export const get = async (resource, token) => {
-  return fetch( [endpoint, resource].join('/'), {headers:{
+  return fetch( [endpoint, resource].join('/'), {headers: {
     'content-type': 'application/json',
-    'Authorization': `Bearer ${token}`
+    'Authorization': `Bearer ${token}`,
   }} ).then((res) => res.json())
       .then((res) => {
         return res;
@@ -18,49 +18,51 @@ export const get = async (resource, token) => {
 
 export const authorized = async (resource, item) => {
   return fetch( [endpoint, resource].join('/'),
-      { headers:{
-        'content-type': 'application/json'
-      }, body: JSON.stringify(item), method: 'POST' } ).then((res) => res.json())
+      { headers: {
+        'content-type': 'application/json',
+      }, body: JSON.stringify(item), method: 'POST' } )
+      .then((res) => res.json())
       .then((res) => {
         return res.accessToken;
       });
 };
 
 export const create = async (resource, item, token) => {
+  console.log('ITEMTRANS', item);
   const result = await fetch( [endpoint, resource].join('/'),
-      { headers:{
+      { headers: {
         'content-type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
       }, body: JSON.stringify(item), method: 'POST' } );
   let data ={};
   if (result.ok) {
     data = await result.json();
-  } else{
+  } else {
     throw new Error('Something went wrong');
   }
-  return data
+  return data;
 };
 
 export const updateMerg = async (resource, id, item, token) => {
   const result = await fetch( [endpoint, resource, id].join('/'),
-      { headers:{
+      { headers: {
         'content-type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
       }, body: JSON.stringify(item), method: 'PATCH' } );
-      let data ={};
-      if (result.ok) {
-        data = await result.json();
-      } else{
-        throw new Error('Something went wrong');
-      }
-      return data
+  let data ={};
+  if (result.ok) {
+    data = await result.json();
+  } else {
+    throw new Error('Something went wrong');
+  }
+  return data;
 };
 
 export const remove = async (resource, id, token) => {
   const result = await fetch( [endpoint, resource, id].join('/'),
-      { headers:{
+      { headers: {
         'content-type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`,
       }, method: 'DELETE' } );
   return result;
 };
