@@ -11,6 +11,8 @@ export default function Login() {
   const history = useHistory();
   const password = useSelector((state) => state.login.form.password,
       shallowEqual);
+  const username = useSelector((state) => state.login.username,
+      shallowEqual);
   const email = useSelector((state) => state.login.form.email, shallowEqual);
   const loading = useSelector((state) => state.login.loading, shallowEqual);
   const error = useSelector((state) => state.login.error, shallowEqual);
@@ -18,8 +20,11 @@ export default function Login() {
 
   const login = useCallback(
       () => {
-        dispatch(loginActions.login({email, password}));
-        history.push('/toyslist');
+        dispatch(loginActions.login({email, password})).then((res) => {
+          if(res){
+            history.push('/toyslist');
+          }
+        })
       }, [history, password],
   );
 

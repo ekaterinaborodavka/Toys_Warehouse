@@ -1,4 +1,5 @@
 export const LOGIN = 'LOGIN';
+export const GET_LOGIN = 'GET_LOGIN';
 export const UPDATE_FORM_LOGIN = 'UPDATE_FORM_LOGIN';
 export const GET_TOYS = 'GET_TOYS';
 export const CHANGE_INCOMIN = 'CHANGE_INCOMIN';

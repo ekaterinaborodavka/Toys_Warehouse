@@ -27,6 +27,7 @@ export const authorized = async (resource, item) => {
       });
 };
 
+
 export const create = async (resource, item, token) => {
   console.log('ITEMTRANS', item);
   const result = await fetch( [endpoint, resource].join('/'),
