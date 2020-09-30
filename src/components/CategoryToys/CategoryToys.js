@@ -5,7 +5,7 @@ import './CategoryToys.css';
 
 export default function CategoryToys(props) {
   const { categories, name, toys, onInputComingChange } = props;
-
+  
   return (
     <select className='Category_Toys'
       required
@@ -15,7 +15,7 @@ export default function CategoryToys(props) {
       {name === 'category' ? (Array.isArray(categories) &&
       categories.map(({ id, name }) => (
         <option key={ id } value={ name }>{ name }</option>
-      ))) : (Array.isArray(toys) && toys.map(({ id, name }) => (
+      ))) : (Array.isArray(toys) && toys.map(({id, name}) => (
         <option key={ id } value={ name }>{ name }</option>
       )))
       }

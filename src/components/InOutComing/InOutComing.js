@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import CategoryToys from '../CategoryToys/CategoryToys';
 import * as formActions from '../../Store/actions/formActions';
 import * as toysActions from '../../Store/actions/toysAction';
+import { createToysNameList } from '../../Utils/toysUtils'
 
 import './InOutComing.css';
 
@@ -17,6 +18,7 @@ export default function Incoming() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const newToysListCategory = createToysNameList(toys)
 
   const onFormSubmit = useCallback(
       (e) => {
@@ -54,7 +56,7 @@ export default function Incoming() {
               name={ 'category' }
               onInputComingChange={ onInputComingChange } />
             <CategoryToys
-              toys={ toys }
+              toys={ newToysListCategory }
               name={ 'name' }
               onInputComingChange={ onInputComingChange }/>
             <input

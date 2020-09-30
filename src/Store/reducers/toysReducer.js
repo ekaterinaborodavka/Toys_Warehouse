@@ -6,6 +6,7 @@ import { GET_TOYS,
 
 export const initialState = {
   list: [],
+  toysCategoryNema: [],
   error: null,
   loading: null,
   incoming: '',

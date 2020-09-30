@@ -34,3 +34,16 @@ export const createNewList = (toys, ind, newItem) => {
     ...toys.slice(ind+1),
   ];
 };
+
+export const createToysNameList = (toys) => {
+  let toysNameList = []
+  toys.map(({ name }) =>{
+    toysNameList.splice(0,0,name)
+  })
+  const sortToys = toysNameList.sort()
+  const newToysList = sortToys.filter((el, ind) => sortToys.indexOf(el) === ind)
+  const newToysListArr = newToysList.map((el) => {
+    return { id: newToysList.indexOf(el), name: el }
+  })
+  return newToysListArr
+};

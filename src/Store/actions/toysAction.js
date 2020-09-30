@@ -11,7 +11,7 @@ import { GET_TOYS,
 import { findItemInd,
   newItem,
   createNewList,
-  newTransaction } from '../../Utils/toysUtils';
+  newTransaction, } from '../../Utils/toysUtils';
 
 export const getToys = () => {
   return async (dispatch, getState) => {
@@ -171,7 +171,7 @@ export const addTransaction = (item) => async (dispatch, getState) =>{
     subtype: 'loading',
   });
   addTransactionResource(item, token).then((res) => {
-    const newList = [...state.toys.transaction, res];
+      const newList = [...state.toys.transaction, res];
     dispatch({
       type: ADD_TRANSACTION,
       subtype: 'success',
