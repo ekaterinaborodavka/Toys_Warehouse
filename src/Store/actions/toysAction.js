@@ -171,7 +171,6 @@ export const addTransaction = (item) => async (dispatch, getState) =>{
     subtype: 'loading',
   });
   addTransactionResource(item, token).then((res) => {
-    console.log('RESTRANS', res);
     const newList = [...state.toys.transaction, res];
     dispatch({
       type: ADD_TRANSACTION,

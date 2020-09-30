@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -22,7 +23,6 @@ export default function App() {
   
   useEffect(() => {
     if(localStorage.token){
-      console.log(localStorage.token);
       dispatch(toysActions.getToys());
       dispatch(categoriesActions.getCategory());
       dispatch(toysActions.getTransactions());
@@ -32,11 +32,10 @@ export default function App() {
   return (
     <Router>
       <Switch>
-        {!localStorage.token && 
-          (<Route exact path='/'>
-              <Login />
-            </Route>)}
-        <Route exact path={localStorage.token ? '/' : '/toyslist'}>
+        <Route exact path='/'>
+          { localStorage.token ? <Redirect to='/toyslist' /> : <Login />}
+        </Route>
+        <Route path='/toyslist'>
           <ToysList />
         </Route>
         <Route path='/incoming'>
