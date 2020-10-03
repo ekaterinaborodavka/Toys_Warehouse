@@ -72,42 +72,42 @@ export const addItem = (item) => async (dispatch, getState) =>{
   const token = state.login.token;
   const toysList = state.toys.list;
   const categoriesList = state.categories.categoriesList;
-  const username = state.login.profile.email;
   const newToy = newItem(toysList, item, categoriesList);
   const ind = findItemInd(toysList, newToy);
   const updateItem = toysList[ind];
-  const transactionList = state.toys.transaction;
 
   dispatch({
     type: ADD_ITEM,
     subtype: 'loading',
   });
-  if (ind === -1) {
+  if(item.quantity > 0){  
+    if (ind === -1) {
     addItemResource(newToy, token).then((res) => {
       const newList = [...state.toys.list, res];
-      const trans = newTransaction(transactionList, res, username, 'incoming');
-      console.log('ADD_ITEM_TRANS', trans)
       dispatch({
         type: ADD_ITEM,
         subtype: 'success',
         list: newList,
       });
-      dispatch(addTransaction(trans));
+    }).then(() => {
+      dispatch(addTransaction(item, 'incoming'));
+      dispatch(getToys())
     });
   } else {
     const toyUpdate = {...newToy,
       quantity: Number(newToy.quantity)+Number(updateItem.quantity)};
     updateItemResource(updateItem.id, toyUpdate, token).then((res) => {
       const newList = createNewList(toysList, ind, res);
-      const trans = newTransaction(transactionList, res, username, 'incoming');
       dispatch({
         type: ADD_ITEM,
         subtype: 'success',
         list: newList,
       });
-      dispatch(addTransaction(trans));
+    }).then(() => {
+      dispatch(addTransaction(item, 'incoming'));
+      dispatch(getToys())
     });
-  }
+  }}
   dispatch({
     type: ADD_ITEM,
     subtype: 'failed',
@@ -124,8 +124,7 @@ export const buyItem = (item) => async (dispatch, getState) =>{
   const newToy = newItem(toysList, item, categoriesList);
   const ind = findItemInd(toysList, newToy);
   const updateItem = toysList[ind];
-  const transactionList = state.toys.transaction;
-  const username = state.login.profile.email;
+
   dispatch({
     type: BUY_ITEM,
     subtype: 'loading',
@@ -137,14 +136,14 @@ export const buyItem = (item) => async (dispatch, getState) =>{
     if (toyUpdate.quantity >= 0) {
       updateItemResource(updateItem.id, toyUpdate, token).then((res) => {
         const newList = createNewList(toysList, ind, res);
-        const trans = newTransaction(transactionList,
-            res, username, 'outcoming');
         dispatch({
           type: BUY_ITEM,
           subtype: 'success',
           list: newList,
         });
-        dispatch(addTransaction(trans));
+      }).then(() => {
+        dispatch(addTransaction(item, 'outcoming'));
+        dispatch(getToys())
       });
     } else {
       alert('There is no such quantity in stock');
@@ -188,16 +187,25 @@ export const changeIncomin = (bool) => {
   };
 };
 
-export const addTransaction = (item) => async (dispatch, getState) =>{
+export const addTransaction = (item, type) => async (dispatch, getState) =>{
   const state = getState();
   const token = state.login.token;
+  const toysList = state.toys.list;
+  const categoriesList = state.categories.categoriesList;
+  const username = state.login.profile.email;
+  const newToy = newItem(toysList, item, categoriesList);
+  const transactionList = state.toys.transaction;
+  const trans = newTransaction(transactionList, newToy,
+     username, type,
+     categoriesList,
+     toysList);
 
   dispatch({
     type: ADD_TRANSACTION,
     subtype: 'loading',
   });
-  addTransactionResource(item, token).then((res) => {
-    console.log('ITEM_TRANS', item);
+  addTransactionResource(trans, token).then((res) => {
+    console.log('ITEM_TRANS', trans);
     console.log('RES_TRANS', res);
       const newList = [...state.toys.transaction, res];
     dispatch({

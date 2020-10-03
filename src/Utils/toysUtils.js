@@ -7,7 +7,8 @@ export const findItemInd = (toys, item) => {
 export const newItem = (toys, item, categoriesList) => {
   const category = categoriesList.filter((el) => el.name === item.category);
   let toyId = toys.length;
-  delete item.category;
+  console.log(item);
+  // delete item.category;
   const newToy = {...item,
     id: `${++toyId}`,
     categoryId: category[0].id,
@@ -18,13 +19,21 @@ export const newItem = (toys, item, categoriesList) => {
   return newToy;
 };
 
-export const newTransaction = (transactions, item, username, type) => {
+export const newTransaction = (transactions, item, username, type, categoriesList, toysList) => {
   let transId = transactions.length;
+  const category = categoriesList.filter((el) => el.id === item.categoryId);
+  const id = toysList.filter((el) => el.name === item.name && el.category.name === category[0].name);
+  delete item.categoryId;
+  const newItem = {
+    ...item,
+    id: id[0].id,
+    category: category,
+  }
   const newTrans = {id: `${++transId}`,
     date: new Date().toISOString(),
     userId: username,
     type: type,
-    toys: [item] };
+    toys: [newItem] };
   return newTrans;
 };
 
