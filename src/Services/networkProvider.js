@@ -38,10 +38,9 @@ export const create = async (resource, item, token) => {
   let data ={};
   if (result.ok) {
     data = await result.json();
-  } 
-  // else {
-  //   throw new Error('Something went wrong');
-  // }
+  }else {
+    throw new Error('Something went wrong');
+  }
   return data;
 };
 

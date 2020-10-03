@@ -30,6 +30,12 @@ export const getToys = () => {
           subtype: 'success',
           list: res.toys,
         });
+      }, (e) => {
+        dispatch({
+          type: GET_TOYS,
+          subtype: 'failed',
+          error: { message: 'Something went wrong' },
+        });
       });
     } else {
       dispatch({
@@ -56,6 +62,12 @@ export const getTransactions = () => {
           subtype: 'success',
           transaction: res.transactions,
         });
+      }, (e) => {
+        dispatch({
+          type: GET_TRANSACTIONS,
+          subtype: 'failed',
+          error: { message: 'Something went wrong' },
+        });
       });
     } else {
       dispatch({
@@ -80,7 +92,8 @@ export const addItem = (item) => async (dispatch, getState) =>{
     type: ADD_ITEM,
     subtype: 'loading',
   });
-  if(item.quantity > 0){  
+  try{
+    if(item.quantity > 0){  
     if (ind === -1) {
     addItemResource(newToy, token).then((res) => {
       const newList = [...state.toys.list, res];
@@ -92,6 +105,12 @@ export const addItem = (item) => async (dispatch, getState) =>{
     }).then(() => {
       dispatch(addTransaction(item, 'incoming'));
       dispatch(getToys())
+    }, (e) => {
+      dispatch({
+        type: ADD_ITEM,
+        subtype: 'failed',
+        error: { message: 'Something went wrong' },
+      });
     });
   } else {
     const toyUpdate = {...newToy,
@@ -106,13 +125,21 @@ export const addItem = (item) => async (dispatch, getState) =>{
     }).then(() => {
       dispatch(addTransaction(item, 'incoming'));
       dispatch(getToys())
+    }, (e) => {
+      dispatch({
+        type: ADD_ITEM,
+        subtype: 'failed',
+        error: { message: 'Something went wrong' },
+      });
     });
-  }}
+  }
+}} catch {
   dispatch({
     type: ADD_ITEM,
     subtype: 'failed',
     error: { message: 'Something went wrong' },
   });
+}
 };
 
 
@@ -129,6 +156,7 @@ export const buyItem = (item) => async (dispatch, getState) =>{
     type: BUY_ITEM,
     subtype: 'loading',
   });
+try{
   if (ind >= 0) {
     const toyUpdate = {...item,
       description: updateItem.description,
@@ -144,16 +172,23 @@ export const buyItem = (item) => async (dispatch, getState) =>{
       }).then(() => {
         dispatch(addTransaction(item, 'outcoming'));
         dispatch(getToys())
+      }, (e) => {
+        dispatch({
+          type: BUY_ITEM,
+          subtype: 'failed',
+          error: { message: 'This toy is not in stock' },
+        });
       });
     } else {
       alert('There is no such quantity in stock');
     }
+  }} catch {
+    dispatch({
+      type: BUY_ITEM,
+      subtype: 'failed',
+      error: { message: 'This toy is not in stock' },
+    });
   }
-  dispatch({
-    type: BUY_ITEM,
-    subtype: 'failed',
-    error: { message: 'This toy is not in stock' },
-  }); ;
 };
 
 export const deleteItem = (id) => async (dispatch, getState) =>{
@@ -165,6 +200,7 @@ export const deleteItem = (id) => async (dispatch, getState) =>{
     type: DELETE_ITEM,
     subtype: 'loading',
   });
+  try{
     deleteItemResource(id, token).then(()=> {
       const newList = toysList.filter((e) => e.id !== id);
       dispatch({
@@ -172,12 +208,20 @@ export const deleteItem = (id) => async (dispatch, getState) =>{
         subtype: 'success',
         list: newList,
       });
+    }, (e) => {
+      dispatch({
+        type: DELETE_ITEM,
+        subtype: 'failed',
+        error: { message: 'Something went wrong' },
+      });
     });
-  dispatch({
-    type: DELETE_ITEM,
-    subtype: 'failed',
-    error: { message: 'Something went wrong' },
-  });
+  } catch {
+    dispatch({
+      type: DELETE_ITEM,
+      subtype: 'failed',
+      error: { message: 'Something went wrong' },
+    });
+  }
 };
 
 export const changeIncomin = (bool) => {
@@ -204,6 +248,7 @@ export const addTransaction = (item, type) => async (dispatch, getState) =>{
     type: ADD_TRANSACTION,
     subtype: 'loading',
   });
+try{ 
   addTransactionResource(trans, token).then((res) => {
     console.log('ITEM_TRANS', trans);
     console.log('RES_TRANS', res);
@@ -217,7 +262,14 @@ export const addTransaction = (item, type) => async (dispatch, getState) =>{
     dispatch({
       type: ADD_TRANSACTION,
       subtype: 'failed',
-      error: e.message,
+      error: e,
     });
   });
+} catch {
+  dispatch({
+    type: ADD_TRANSACTION,
+    subtype: 'failed',
+    error: { message: 'Something went wrong' },
+  });
+}
 };

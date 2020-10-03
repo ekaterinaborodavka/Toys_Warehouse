@@ -31,7 +31,7 @@ export default function Incoming() {
           alert('Lead the category and name of the toy');
         }
         history.push('/toyslist');
-      }, [dispatch, form],
+      }, [dispatch, form, history, incoming],
   );
 
   const onInputComingChange = useCallback(

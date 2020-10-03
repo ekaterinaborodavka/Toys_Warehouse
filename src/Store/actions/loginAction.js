@@ -29,6 +29,12 @@ export const login = (item) => {
       dispatch(getLogin())
       return res
      }
+    }, (e) => {
+      dispatch({
+        type: LOGIN,
+        subtype: 'failed',
+        error: { message: 'Password or login incorrect' },
+      })
     });
     dispatch({
       type: LOGIN,
@@ -54,6 +60,12 @@ export const getLogin = () => {
           type: GET_LOGIN,
           subtype: 'success',
           profile: res,
+        });
+      }, (e) => {
+        dispatch({
+          type: GET_LOGIN,
+          subtype: 'failed',
+          error: { message: 'Something went wrong' },
         });
       });
     } else {

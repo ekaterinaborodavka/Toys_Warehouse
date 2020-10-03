@@ -47,7 +47,7 @@ export const createNewList = (toys, ind, newItem) => {
 export const createToysNameList = (toys) => {
   let toysNameList = []
   toys.map(({ name }) =>{
-    toysNameList.splice(0,0,name)
+    return toysNameList.splice(0,0,name)
   })
   const sortToys = toysNameList.sort()
   const newToysList = sortToys.filter((el, ind) => sortToys.indexOf(el) === ind)

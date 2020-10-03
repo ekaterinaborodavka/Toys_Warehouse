@@ -23,7 +23,7 @@ export default function Login() {
             history.push('/toyslist');
           }
         })
-      }, [history, password],
+      }, [history, password, email, dispatch],
   );
 
   const onInputChange = useCallback(
