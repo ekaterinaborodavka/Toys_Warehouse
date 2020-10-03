@@ -70,7 +70,7 @@ export const addItem = (item) => async (dispatch, getState) =>{
   const token = state.login.token;
   const toysList = state.toys.list;
   const categoriesList = state.categories.categoriesList;
-  const username = state.login.username;
+  const username = state.login.profile.email;
   const newToy = newItem(toysList, item, categoriesList);
   const ind = findItemInd(toysList, newToy);
   const updateItem = toysList[ind];
@@ -84,6 +84,7 @@ export const addItem = (item) => async (dispatch, getState) =>{
     addItemResource(newToy, token).then((res) => {
       const newList = [...state.toys.list, res];
       const trans = newTransaction(transactionList, res, username, 'incoming');
+      console.log('ADD_ITEM_TRANS', trans)
       dispatch({
         type: ADD_ITEM,
         subtype: 'success',
@@ -122,7 +123,7 @@ export const buyItem = (item) => async (dispatch, getState) =>{
   const ind = findItemInd(toysList, newToy);
   const updateItem = toysList[ind];
   const transactionList = state.toys.transaction;
-  const username = state.login.username;
+  const username = state.login.profile.email;
   dispatch({
     type: BUY_ITEM,
     subtype: 'loading',
@@ -162,7 +163,6 @@ export const changeIncomin = (bool) => {
 };
 
 export const addTransaction = (item) => async (dispatch, getState) =>{
-  console.log('TRANSITEM', item);
   const state = getState();
   const token = state.login.token;
 
@@ -171,6 +171,8 @@ export const addTransaction = (item) => async (dispatch, getState) =>{
     subtype: 'loading',
   });
   addTransactionResource(item, token).then((res) => {
+    console.log('ITEM_TRANS', item);
+    console.log('RES_TRANS', res);
       const newList = [...state.toys.transaction, res];
     dispatch({
       type: ADD_TRANSACTION,
@@ -182,5 +184,5 @@ export const addTransaction = (item) => async (dispatch, getState) =>{
     type: ADD_TRANSACTION,
     subtype: 'failed',
     error: { message: 'Something went wrong' },
-  }); ;
+  });
 };

@@ -29,7 +29,7 @@ export const authorized = async (resource, item) => {
 
 
 export const create = async (resource, item, token) => {
-  console.log('ITEMTRANS', item);
+  console.log('CREATE_ITEM', item);
   const result = await fetch( [endpoint, resource].join('/'),
       { headers: {
         'content-type': 'application/json',
@@ -38,9 +38,10 @@ export const create = async (resource, item, token) => {
   let data ={};
   if (result.ok) {
     data = await result.json();
-  } else {
-    throw new Error('Something went wrong');
-  }
+  } 
+  // else {
+  //   throw new Error('Something went wrong');
+  // }
   return data;
 };
 

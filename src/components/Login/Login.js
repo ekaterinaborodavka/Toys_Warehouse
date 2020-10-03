@@ -11,8 +11,6 @@ export default function Login() {
   const history = useHistory();
   const password = useSelector((state) => state.login.form.password,
       shallowEqual);
-  const username = useSelector((state) => state.login.username,
-      shallowEqual);
   const email = useSelector((state) => state.login.form.email, shallowEqual);
   const loading = useSelector((state) => state.login.loading, shallowEqual);
   const error = useSelector((state) => state.login.error, shallowEqual);

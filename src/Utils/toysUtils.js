@@ -8,12 +8,13 @@ export const newItem = (toys, item, categoriesList) => {
   const category = categoriesList.filter((el) => el.name === item.category);
   let toyId = toys.length;
   delete item.category;
-  const newToy = {id: `${++toyId}`,
+  const newToy = {...item,
+    id: `${++toyId}`,
     categoryId: category[0].id,
     price: 100,
     totalCost: 100, 
     quantity: Number(item.quantity),
-    ...item };
+  };
   return newToy;
 };
 
