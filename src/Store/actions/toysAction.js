@@ -1,12 +1,14 @@
 import { getList as getResource,
   createItem as addItemResource,
   updateMergItem as updateItemResource,
+  removeItem as deleteItemResource,
   createTransaction as addTransactionResource} from '../../Resources/toys';
 import { GET_TOYS,
   GET_TRANSACTIONS,
   CHANGE_INCOMIN,
   ADD_ITEM,
   BUY_ITEM,
+  DELETE_ITEM,
   ADD_TRANSACTION } from '../types/types';
 import { findItemInd,
   newItem,
@@ -155,6 +157,30 @@ export const buyItem = (item) => async (dispatch, getState) =>{
   }); ;
 };
 
+export const deleteItem = (id) => async (dispatch, getState) =>{
+  const state = getState();
+  const token = state.login.token;
+  const toysList = state.toys.list;
+
+  dispatch({
+    type: DELETE_ITEM,
+    subtype: 'loading',
+  });
+    deleteItemResource(id, token).then(()=> {
+      const newList = toysList.filter((e) => e.id !== id);
+      dispatch({
+        type: DELETE_ITEM,
+        subtype: 'success',
+        list: newList,
+      });
+    });
+  dispatch({
+    type: DELETE_ITEM,
+    subtype: 'failed',
+    error: { message: 'Something went wrong' },
+  });
+};
+
 export const changeIncomin = (bool) => {
   return {
     type: CHANGE_INCOMIN,
@@ -179,10 +205,11 @@ export const addTransaction = (item) => async (dispatch, getState) =>{
       subtype: 'success',
       transaction: newList,
     });
-  });
-  dispatch({
-    type: ADD_TRANSACTION,
-    subtype: 'failed',
-    error: { message: 'Something went wrong' },
+  }, (e) => {
+    dispatch({
+      type: ADD_TRANSACTION,
+      subtype: 'failed',
+      error: e.message,
+    });
   });
 };

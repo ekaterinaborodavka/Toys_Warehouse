@@ -5,6 +5,7 @@ import { GET_CATEGORY,
   DELETE_CATEGORY,
   UPDATE_FORM_CATEGORY,
   ADD_NEW_CATEGORY} from '../types/types';
+import * as toysActions from '../../Store/actions/toysAction';
 
 export const getCategory = () => async (dispatch, getState) => {
   const token = getState().login.token;
@@ -34,24 +35,38 @@ export const deleteCategory = (id) => async (dispatch, getState) =>{
   const categoriesList = state.categories.categoriesList;
   const cat = categoriesList.filter((e) => e.id === id);
   const catItem = toysList.filter((e) => e.category.name === cat[0].name);
+  console.log(catItem);
   dispatch({
     type: DELETE_CATEGORY,
     subtype: 'loading',
   });
   if (catItem.length === 0 || catItem[0].quantity === 0) {
-    removeCategory(id, token).then(()=> {
-      const newList = categoriesList.filter((e) => e.id !== id);
-      dispatch({
-        type: DELETE_CATEGORY,
-        subtype: 'success',
-        list: newList,
+    if(catItem.length === 0){
+      removeCategory(id, token).then(()=> {
+        const newList = categoriesList.filter((e) => e.id !== id);
+        dispatch({
+          type: DELETE_CATEGORY,
+          subtype: 'success',
+          list: newList,
+        });
       });
-    });
+    }else{
+      dispatch(toysActions.deleteItem(catItem[0].id)).then(() => {
+        removeCategory(id, token).then(()=> {
+          const newList = categoriesList.filter((e) => e.id !== id);
+          dispatch({
+            type: DELETE_CATEGORY,
+            subtype: 'success',
+            list: newList,
+          });
+        });
+      })
+    }
   }
   dispatch({
     type: DELETE_CATEGORY,
     subtype: 'failed',
-    error: { message: 'Something went wrong' },
+    error: {message: 'Something went wromg'},
   });
 };
 
@@ -73,12 +88,12 @@ export const addNewCategory = (item) => async (dispatch, getState) =>{
       subtype: 'success',
       list: newList,
     });
-  });
-
-  dispatch({
-    type: ADD_NEW_CATEGORY,
-    subtype: 'failed',
-    error: { message: 'Something went wrong' },
+  }, (e) => {
+    dispatch({
+      type: ADD_NEW_CATEGORY,
+      subtype: 'failed',
+      error: e.message,
+    });
   });
 };
 

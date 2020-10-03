@@ -2,7 +2,9 @@ import { GET_TOYS,
   GET_TRANSACTIONS,
   ADD_TRANSACTION,
   CHANGE_INCOMIN,
-  ADD_ITEM, BUY_ITEM } from '../types/types';
+  ADD_ITEM,
+  DELETE_ITEM,
+  BUY_ITEM } from '../types/types';
 
 export const initialState = {
   list: [],
@@ -17,7 +19,8 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_TOYS:
     case ADD_ITEM:
-    case BUY_ITEM: {
+    case BUY_ITEM:
+    case DELETE_ITEM: {
       return {
         ...state,
         list: action.subtype === 'success' ? action.list : state.list,

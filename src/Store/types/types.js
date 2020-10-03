@@ -9,6 +9,7 @@ export const ADD_NEW_CATEGORY = 'ADD_NEW_CATEGORY';
 export const CLEAR_FORM = 'CLEAR_FORM';
 export const ADD_ITEM = 'ADD_ITEM';
 export const BUY_ITEM = 'BUY_ITEM';
+export const DELETE_ITEM = 'DELETE_ITEM';
 export const UPDATE_FORM_TOY = 'UPDATE_FORM_TOY';
 export const GET_CATEGORY = 'GET_CATEGORY';
 export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';

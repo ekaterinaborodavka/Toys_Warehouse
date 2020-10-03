@@ -13,6 +13,10 @@ export const createItem = (item = {}, token) => {
   return create('toys', item, token);
 };
 
+export const removeItem = (id, token) => {
+  return remove('toys', id, token);
+};
+
 export const createTransaction= (item = {}, token) => {
   return create('transactions', item, token);
 };
