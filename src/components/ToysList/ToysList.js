@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import ToysListElement from '../ToysListElement/ToysListElement';
 import * as toysActions from '../../Store/actions/toysAction';
-import CategoryToys from '../CategoryToys/CategoryToys';
 
 import './ToysList.css';
 
@@ -13,8 +12,6 @@ export default function ToysList() {
   const history = useHistory();
   const dispatch = useDispatch();
   const toys = useSelector((state) => state.toys.list, shallowEqual);
-  const categories = useSelector((state) => state.categories.categoriesList,
-  shallowEqual);
   const error = useSelector((state) => state.toys.error, shallowEqual);
   const isLoading = useSelector((state) => state.toys.loading,
       shallowEqual);

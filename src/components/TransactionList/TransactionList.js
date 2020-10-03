@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { shallowEqual, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import './TransactionList.css';
@@ -6,6 +7,7 @@ import './TransactionList.css';
 export default function TransactionList(props) {
   const { items, transaction: { type, date, userId } } = props;
   const [open, setOpen] = useState(false);
+  const toys = useSelector((state) => state.toys.list, shallowEqual);
 
   const changeOpen = useCallback(
       () => {
@@ -20,14 +22,19 @@ export default function TransactionList(props) {
         { type } { date } User: { userId }
       </span>
       {Array.isArray(items) && items.map((item) => {
+        const currentToy = toys.filter((el) => {
+            return item.name === el.name && item.category.name === el.category.name
+        });
         return (
           <div key={ item.id }
             className={ open ?
                             'Transaction_Item_Details_Open' :
                             'Transaction_Item_Details_Close' }>
-                           Name: {item.name},
-                           Quantity: {item.quantity},
-                           Category: {item.category.name}
+            
+                          Quantity of goods in stock: <br />
+                           Name: {currentToy[0].name},
+                           Quantity: {currentToy[0].quantity},
+                           Category: {currentToy[0].category.name}
           </div>
         );
       }) }

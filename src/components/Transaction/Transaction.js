@@ -8,7 +8,7 @@ import './Transaction.css';
 export default function Transaction() {
   const transactionList = useSelector((state) => state.toys.transaction,
       shallowEqual);
-      
+
   return (
     <React.Fragment>
       <h1 className='Title'>Toys Warehouse</h1>
@@ -19,7 +19,7 @@ export default function Transaction() {
                 transactionList.map( (transaction) => {
                   return (
                     <TransactionList
-                      transaction={ transaction }
+                      transaction = { transaction }
                       items = { transaction.toys }
                       key={ transaction.id }
                     />
