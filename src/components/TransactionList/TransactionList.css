@@ -5,7 +5,11 @@
 }
 
 .Transaction_Item_Details_Open{
-    margin: 2%;
+    margin: 1%;
+    line-height: 1.7rem;
+}
+.Transaction_Item_Details_Open span{
+    font-weight: bold;
 }
 
 .Transaction_Item_Details_Close{

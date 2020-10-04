@@ -19,7 +19,8 @@ export default function TransactionList(props) {
     <div className='Transaction_Item' onClick={ changeOpen }>
       <span className={ type === 'incoming' ?
                             'Incoming' : 'Outcoming'}>
-        { type } { date } User: { userId }
+        { type } Date: { date.slice(0, 10) }
+        { date.slice(11, 19) } User: { userId }
       </span>
       {Array.isArray(items) && items.map((item) => {
         const currentToy = toys.filter((el) => {
@@ -33,11 +34,13 @@ export default function TransactionList(props) {
               className={ open ?
                               'Transaction_Item_Details_Open' :
                               'Transaction_Item_Details_Close' }>
-
-                            Quantity of goods in stock: <br />
-                             Name: {currentToy[0].name},
-                             Quantity: {currentToy[0].quantity},
-                             Category: {currentToy[0].category.name}
+              { type }: { item.name }
+                            ({ item.category.name })
+                            quantity: { item.quantity }<br />
+              <span>Quantity of goods in stock:</span> <br />
+                            Name: {currentToy[0].name},
+                            Quantity: {currentToy[0].quantity},
+                            Category: {currentToy[0].category.name}
             </div>
           );
         } else {
@@ -46,8 +49,10 @@ export default function TransactionList(props) {
               className={ open ?
                               'Transaction_Item_Details_Open' :
                               'Transaction_Item_Details_Close' }>
-
-                            Quantity of goods in stock: <br />
+              { type }: { item.name }
+                            ({ item.category.name })
+                            quantity: { item.quantity }<br />
+              <span>Quantity of goods in stock:</span> <br />
                             There is no more such item in stock
             </div>
           );
