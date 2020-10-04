@@ -19,10 +19,10 @@ export default function Login() {
   const login = useCallback(
       () => {
         dispatch(loginActions.login({email, password})).then((res) => {
-          if(res){
+          if (res) {
             history.push('/toyslist');
           }
-        })
+        });
       }, [history, password, email, dispatch],
   );
 

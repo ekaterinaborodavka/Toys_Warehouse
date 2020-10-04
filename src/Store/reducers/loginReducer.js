@@ -5,7 +5,7 @@ export const initialState = {
   form: {},
   loading: null,
   error: null,
-  profile: ''
+  profile: '',
 };
 
 const reducer = (state = initialState, action) => {

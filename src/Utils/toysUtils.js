@@ -11,22 +11,28 @@ export const newItem = (toys, item, categoriesList) => {
     id: `${++toyId}`,
     categoryId: category[0].id,
     price: 100,
-    totalCost: 100, 
+    totalCost: 100,
     quantity: Number(item.quantity),
   };
   return newToy;
 };
 
-export const newTransaction = (transactions, item, username, type, categoriesList, toysList) => {
+export const newTransaction = (transactions,
+    item, username, type,
+    categoriesList, toysList) => {
   let transId = transactions.length;
   const category = categoriesList.filter((el) => el.id === item.categoryId);
-  const id = toysList.filter((el) => el.name === item.name && el.category.name === category[0].name);
+  const id = toysList.filter((el) => {
+    return (
+      el.name === item.name && el.category.name === category[0].name
+    );
+  });
   delete item.categoryId;
   const newItem = {
     ...item,
     id: id[0].id,
     category: category,
-  }
+  };
   const newTrans = {id: `${++transId}`,
     date: new Date().toISOString(),
     userId: username,
@@ -44,16 +50,18 @@ export const createNewList = (toys, ind, newItem) => {
 };
 
 export const createToysNameList = (toys) => {
-  let toysNameList = []
+  const toysNameList = [];
   toys.map(({ name }) =>{
-    return toysNameList.splice(0,0,name)
-  })
-  const sortToys = toysNameList.sort()
-  const newToysList = sortToys.filter((el, ind) => sortToys.indexOf(el) === ind)
+    return toysNameList.splice(0, 0, name);
+  });
+  const sortToys = toysNameList.sort();
+  const newToysList = sortToys.filter((el, ind) => {
+    return sortToys.indexOf(el) === ind;
+  });
   const newToysListArr = newToysList.map((el) => {
-    return { id: newToysList.indexOf(el), name: el }
-  })
-  return newToysListArr
+    return { id: newToysList.indexOf(el), name: el };
+  });
+  return newToysListArr;
 };
 
 export const dispError = (dispatch, type, er) => {
@@ -62,6 +70,6 @@ export const dispError = (dispatch, type, er) => {
     subtype: 'failed',
     error: er,
   });
-}
+};
 
-export const err = { message: 'Something went wrong' }
+export const err = { message: 'Something went wrong' };

@@ -6,7 +6,7 @@ import { GET_CATEGORY,
   UPDATE_FORM_CATEGORY,
   ADD_NEW_CATEGORY} from '../types/types';
 import * as toysActions from '../../Store/actions/toysAction';
-import { dispError, err } from '../../Utils/toysUtils'
+import { dispError, err } from '../../Utils/toysUtils';
 
 export const getCategory = () => async (dispatch, getState) => {
   const token = getState().login.token;
@@ -15,18 +15,18 @@ export const getCategory = () => async (dispatch, getState) => {
     type: GET_CATEGORY,
     subtype: 'loading',
   });
-try{
-  getCategoriesResource('categories', token).then((res) => {
-    dispatch({
-      type: GET_CATEGORY,
-      subtype: 'success',
-      list: res.categories,
+  try {
+    getCategoriesResource('categories', token).then((res) => {
+      dispatch({
+        type: GET_CATEGORY,
+        subtype: 'success',
+        list: res.categories,
+      });
+    }, (e) => {
+      dispError(dispatch, GET_CATEGORY, e);
     });
-  }, (e) => {
-    dispError(dispatch, GET_CATEGORY, e)
-  });
-} catch {
-    dispError(dispatch, GET_CATEGORY, err)
+  } catch {
+    dispError(dispatch, GET_CATEGORY, err);
   }
 };
 
@@ -43,7 +43,7 @@ export const deleteCategory = (id) => async (dispatch, getState) =>{
     subtype: 'loading',
   });
   if (catItem.length === 0 || catItem[0].quantity === 0) {
-    if(catItem.length === 0){
+    if (catItem.length === 0) {
       removeCategory(id, token).then(()=> {
         const newList = categoriesList.filter((e) => e.id !== id);
         dispatch({
@@ -52,12 +52,11 @@ export const deleteCategory = (id) => async (dispatch, getState) =>{
           list: newList,
         });
       }, (e) => {
-        dispError(dispatch, DELETE_CATEGORY, err)
+        dispError(dispatch, DELETE_CATEGORY, err);
       });
-    }else{
+    } else {
       dispatch(toysActions.deleteItem(catItem[0].id)).then(() => {
         removeCategory(id, token).then(()=> {
-
           const newList = categoriesList.filter((e) => e.id !== id);
           dispatch({
             type: DELETE_CATEGORY,
@@ -65,12 +64,12 @@ export const deleteCategory = (id) => async (dispatch, getState) =>{
             list: newList,
           });
         }, (e) => {
-          dispError(dispatch, DELETE_CATEGORY, err)
+          dispError(dispatch, DELETE_CATEGORY, err);
         });
-      })
+      });
     }
-  }else{
-    dispError(dispatch, DELETE_CATEGORY, err)
+  } else {
+    dispError(dispatch, DELETE_CATEGORY, err);
   }
 };
 
@@ -85,20 +84,20 @@ export const addNewCategory = (item) => async (dispatch, getState) =>{
     type: ADD_NEW_CATEGORY,
     subtype: 'loading',
   });
-try{
-  createCategory(newCat, token).then((res) => {
-    const newList = [...catList, res];
-    dispatch({
-      type: ADD_NEW_CATEGORY,
-      subtype: 'success',
-      list: newList,
+  try {
+    createCategory(newCat, token).then((res) => {
+      const newList = [...catList, res];
+      dispatch({
+        type: ADD_NEW_CATEGORY,
+        subtype: 'success',
+        list: newList,
+      });
+    }, (e) => {
+      dispError(dispatch, ADD_NEW_CATEGORY, e);
     });
-  }, (e) => {
-    dispError(dispatch, ADD_NEW_CATEGORY, e)
-  });
-} catch {
-  dispError(dispatch, ADD_NEW_CATEGORY, err)
-}
+  } catch {
+    dispError(dispatch, ADD_NEW_CATEGORY, err);
+  }
 };
 
 export const updateFormCategory = (update) => {

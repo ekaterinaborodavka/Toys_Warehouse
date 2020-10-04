@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -21,13 +21,13 @@ import './App.css';
 
 export default function App() {
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
-    if(localStorage.token){
+    if (localStorage.token) {
       dispatch(toysActions.getToys());
       dispatch(categoriesActions.getCategory());
       dispatch(toysActions.getTransactions());
-      dispatch(loginActions.getLogin())
+      dispatch(loginActions.getLogin());
     }
   }, [dispatch]);
 

@@ -5,7 +5,7 @@ import './CategoryToys.css';
 
 export default function CategoryToys(props) {
   const { categories, name, toys, onInputComingChange } = props;
-  
+
   return (
     <select className='Category_Toys'
       required

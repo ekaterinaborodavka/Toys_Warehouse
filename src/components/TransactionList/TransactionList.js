@@ -23,28 +23,30 @@ export default function TransactionList(props) {
       </span>
       {Array.isArray(items) && items.map((item) => {
         const currentToy = toys.filter((el) => {
-            return item.name === el.name && item.category.name === el.category.name
+          return (
+            item.name === el.name && item.category.name === el.category.name
+          );
         });
-        if(currentToy.length){
+        if (currentToy.length) {
           return (
             <div key={ item.id }
               className={ open ?
                               'Transaction_Item_Details_Open' :
                               'Transaction_Item_Details_Close' }>
-              
+
                             Quantity of goods in stock: <br />
                              Name: {currentToy[0].name},
                              Quantity: {currentToy[0].quantity},
                              Category: {currentToy[0].category.name}
             </div>
           );
-        }else{
+        } else {
           return (
             <div key={ item.id }
               className={ open ?
                               'Transaction_Item_Details_Open' :
                               'Transaction_Item_Details_Close' }>
-              
+
                             Quantity of goods in stock: <br />
                             There is no more such item in stock
             </div>
