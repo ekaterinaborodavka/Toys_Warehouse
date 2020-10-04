@@ -51,3 +51,35 @@
 .ToysList_Button button:hover{
     color: black;
 }
+
+.Form_Wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin: 0.5%;
+}
+
+.Toys_List_Form{
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 2%;
+}
+
+.Toys_List_button{
+    margin: 1%;
+    margin-left: 50%;
+    width: 7%;
+    padding: 0.3%;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background-color: teal;
+    border: 1px solid rgb(23, 3, 97);
+    color: lightyellow;
+    font-weight: bold;
+}
+
+.Toys_List_button:hover{
+    color: black;
+}

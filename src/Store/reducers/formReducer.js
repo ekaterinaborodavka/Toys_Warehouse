@@ -1,7 +1,9 @@
 import { UPDATE_FORM_TOY,
   CLEAR_FORM,
   ADD_NEW_CATEGORY,
-  ADD_ITEM, BUY_ITEM } from '../types/types';
+  ADD_ITEM,
+  INCOMING,
+  OUTCOMING } from '../types/types';
 
 export const initialState = {
   name: '',
@@ -21,7 +23,8 @@ const reducer = (state = initialState, action) => {
     case CLEAR_FORM:
     case ADD_NEW_CATEGORY:
     case ADD_ITEM:
-    case BUY_ITEM: {
+    case INCOMING:
+    case OUTCOMING: {
       return {
         ...initialState,
       };

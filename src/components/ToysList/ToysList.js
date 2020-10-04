@@ -4,7 +4,9 @@ import { useHistory } from 'react-router-dom';
 
 import Loader from '../Loader/Loader';
 import ToysListElement from '../ToysListElement/ToysListElement';
+import CategoryToys from '../CategoryToys/CategoryToys';
 import * as toysActions from '../../Store/actions/toysAction';
+import * as formActions from '../../Store/actions/formActions';
 
 import './ToysList.css';
 
@@ -12,6 +14,9 @@ export default function ToysList() {
   const history = useHistory();
   const dispatch = useDispatch();
   const toys = useSelector((state) => state.toys.list, shallowEqual);
+  const form = useSelector((state) => state.form, shallowEqual);
+  const categories = useSelector((state) => state.categories.categoriesList,
+      shallowEqual);
   const error = useSelector((state) => state.toys.error, shallowEqual);
   const isLoading = useSelector((state) => state.toys.loading,
       shallowEqual);
@@ -26,6 +31,25 @@ export default function ToysList() {
           dispatch(toysActions.changeIncomin(false));
         }
       }, [dispatch, history],
+  );
+
+  const onFormSubmit = useCallback(
+      (e) => {
+        e.preventDefault();
+        if (form.name && form.category) {
+          dispatch(toysActions.addItem(form));
+        } else {
+          alert('Lead the category and name of the toy');
+        }
+      }, [dispatch, form],
+  );
+
+  const onInputComingChange = useCallback(
+      ({ target }) => {
+        dispatch(formActions.updateFormToy({
+          [target.name]: target.value,
+        }));
+      }, [dispatch],
   );
 
   return (
@@ -64,6 +88,28 @@ export default function ToysList() {
           />
         );
       })}
+      <form className='Toys_List_Form' onSubmit={ onFormSubmit }>
+        <div className='Form_Wrapper'>
+          <CategoryToys
+            categories={ categories }
+            name='category'
+            value={ form.category }
+            onInputComingChange={ onInputComingChange }/>
+          <input
+            className='Name_Toys'
+            name='name'
+            placeholder='name'
+            value={ form.name }
+            onChange={ onInputComingChange }/>
+          <input
+            className='Description_Toys'
+            name='description'
+            placeholder='description'
+            value={ form.description }
+            onChange={ onInputComingChange }/>
+        </div>
+        <button className='Toys_List_button'>Add Toy</button>
+      </form>
     </div>
   );
 }

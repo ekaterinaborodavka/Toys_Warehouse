@@ -15,3 +15,5 @@ export const GET_CATEGORY = 'GET_CATEGORY';
 export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
 export const ADD_TRANSACTION = 'ADD_TRANSACTION';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
+export const INCOMING = 'INCOMING';
+export const OUTCOMING = 'OUTCOMING';

@@ -7,7 +7,8 @@ import { GET_TOYS,
   GET_TRANSACTIONS,
   CHANGE_INCOMIN,
   ADD_ITEM,
-  BUY_ITEM,
+  INCOMING,
+  OUTCOMING,
   DELETE_ITEM,
   CLEAR_ERROR,
   ADD_TRANSACTION } from '../types/types';
@@ -79,52 +80,28 @@ export const addItem = (item) => async (dispatch, getState) =>{
   const toysList = state.toys.list;
   const categoriesList = state.categories.categoriesList;
   const newToy = newItem(toysList, item, categoriesList);
-  const ind = findItemInd(toysList, newToy);
-  const updateItem = toysList[ind];
 
   dispatch({
     type: ADD_ITEM,
     subtype: 'loading',
   });
-  if (item.quantity > 0) {
-    if (ind === -1) {
-      addItemResource(newToy, token).then((res) => {
-        const newList = [...state.toys.list, res];
-        dispatch({
-          type: ADD_ITEM,
-          subtype: 'success',
-          list: newList,
-        });
-      }).then(() => {
-        dispatch(addTransaction(item, 'incoming'));
-        dispatch(getToys());
-      }, (e) => {
-        dispError(dispatch, ADD_ITEM, err);
+  try {
+    addItemResource(newToy, token).then((res) => {
+      const newList = [...state.toys.list, res];
+      dispatch({
+        type: ADD_ITEM,
+        subtype: 'success',
+        list: newList,
       });
-    } else {
-      const toyUpdate = {...newToy,
-        quantity: Number(newToy.quantity)+Number(updateItem.quantity)};
-      updateItemResource(updateItem.id, toyUpdate, token).then((res) => {
-        const newList = createNewList(toysList, ind, res);
-        dispatch({
-          type: ADD_ITEM,
-          subtype: 'success',
-          list: newList,
-        });
-      }).then(() => {
-        dispatch(addTransaction(item, 'incoming'));
-        dispatch(getToys());
-      }, (e) => {
-        dispError(dispatch, ADD_ITEM, err);
-      });
-    }
-  } else {
+    }, (e) => {
+      dispError(dispatch, ADD_ITEM, err);
+    });
+  } catch {
     dispError(dispatch, ADD_ITEM, err);
   }
 };
 
-
-export const buyItem = (item) => async (dispatch, getState) =>{
+export const incoming = (item) => async (dispatch, getState) =>{
   const state = getState();
   const token = state.login.token;
   const toysList = state.toys.list;
@@ -134,7 +111,46 @@ export const buyItem = (item) => async (dispatch, getState) =>{
   const updateItem = toysList[ind];
 
   dispatch({
-    type: BUY_ITEM,
+    type: INCOMING,
+    subtype: 'loading',
+  });
+  if (item.quantity > 0) {
+    if (ind > 0) {
+      const toyUpdate = {...newToy,
+        quantity: Number(newToy.quantity)+Number(updateItem.quantity)};
+      updateItemResource(updateItem.id, toyUpdate, token).then((res) => {
+        const newList = createNewList(toysList, ind, res);
+        dispatch({
+          type: INCOMING,
+          subtype: 'success',
+          list: newList,
+        });
+      }).then(() => {
+        dispatch(addTransaction(item, 'incoming'));
+        dispatch(getToys());
+      }, (e) => {
+        dispError(dispatch, INCOMING, err);
+      });
+    } else {
+      dispError(dispatch, INCOMING, err);
+    }
+  } else {
+    dispError(dispatch, INCOMING, err);
+  }
+};
+
+
+export const outcoming = (item) => async (dispatch, getState) =>{
+  const state = getState();
+  const token = state.login.token;
+  const toysList = state.toys.list;
+  const categoriesList = state.categories.categoriesList;
+  const newToy = newItem(toysList, item, categoriesList);
+  const ind = findItemInd(toysList, newToy);
+  const updateItem = toysList[ind];
+
+  dispatch({
+    type: OUTCOMING,
     subtype: 'loading',
   });
   if (item.quantity > 0) {
@@ -146,7 +162,7 @@ export const buyItem = (item) => async (dispatch, getState) =>{
         updateItemResource(updateItem.id, toyUpdate, token).then((res) => {
           const newList = createNewList(toysList, ind, res);
           dispatch({
-            type: BUY_ITEM,
+            type: OUTCOMING,
             subtype: 'success',
             list: newList,
           });
@@ -154,19 +170,19 @@ export const buyItem = (item) => async (dispatch, getState) =>{
           dispatch(addTransaction(item, 'outcoming'));
           dispatch(getToys());
         }, (e) => {
-          dispError(dispatch, BUY_ITEM,
+          dispError(dispatch, OUTCOMING,
               { message: 'This toy is not in stock' });
         });
       } else {
         alert('There is no such quantity in stock');
-        dispError(dispatch, BUY_ITEM,
+        dispError(dispatch, OUTCOMING,
             { message: 'There is no such quantity in stock' });
       }
     } else {
-      dispError(dispatch, BUY_ITEM, err);
+      dispError(dispatch, OUTCOMING, err);
     }
   } else {
-    dispError(dispatch, BUY_ITEM, err);
+    dispError(dispatch, OUTCOMING, err);
   }
 };
 

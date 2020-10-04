@@ -7,14 +7,27 @@ export const findItemInd = (toys, item) => {
 export const newItem = (toys, item, categoriesList) => {
   const category = categoriesList.filter((el) => el.name === item.category);
   let toyId = toys.length;
-  const newToy = {...item,
+  let newToy = {...item,
     id: `${++toyId}`,
     categoryId: category[0].id,
     price: 100,
     totalCost: 100,
     quantity: Number(item.quantity),
   };
-  return newToy;
+  const description = toys.filter((el) => {
+    return (
+      el.name === item.name && el.categoryId === item.categoryId
+    );
+  });
+  if (description.length > 0 ) {
+    newToy = {
+      ...newToy,
+      description: description[0].description,
+    };
+    return newToy;
+  } else {
+    return newToy;
+  }
 };
 
 export const newTransaction = (transactions,

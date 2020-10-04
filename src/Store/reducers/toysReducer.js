@@ -3,9 +3,10 @@ import { GET_TOYS,
   ADD_TRANSACTION,
   CHANGE_INCOMIN,
   ADD_ITEM,
+  INCOMING,
+  OUTCOMING,
   DELETE_ITEM,
-  CLEAR_ERROR,
-  BUY_ITEM } from '../types/types';
+  CLEAR_ERROR} from '../types/types';
 
 export const initialState = {
   list: [],
@@ -18,8 +19,9 @@ export const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_TOYS:
+    case INCOMING:
+    case OUTCOMING:
     case ADD_ITEM:
-    case BUY_ITEM:
     case DELETE_ITEM: {
       return {
         ...state,

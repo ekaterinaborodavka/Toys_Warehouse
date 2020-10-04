@@ -24,9 +24,9 @@ export default function Incoming() {
       (e) => {
         e.preventDefault();
         if (incoming && form.name && form.category) {
-          dispatch(toysActions.addItem(form));
+          dispatch(toysActions.incoming(form));
         } else if ( form.name && form.category ) {
-          dispatch(toysActions.buyItem(form));
+          dispatch(toysActions.outcoming(form));
         } else {
           alert('Lead the category and name of the toy');
         }
@@ -66,11 +66,6 @@ export default function Incoming() {
               placeholder='quantity'
               type='number'
               onChange={ onInputComingChange } />
-            {incoming ? <input
-              className='Description_Toys'
-              name='description'
-              placeholder='description'
-              onChange={ onInputComingChange } /> : null}
           </div>
           <div className='Form_buttons_container'>
             <div>

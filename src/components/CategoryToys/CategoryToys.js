@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import './CategoryToys.css';
 
 export default function CategoryToys(props) {
-  const { categories, name, toys, onInputComingChange } = props;
+  const { value, categories, name, toys, onInputComingChange } = props;
 
   return (
     <select className='Category_Toys'
       required
+      value={ value }
       onChange={ onInputComingChange }
       name={ name }>
       <option hidden>{ name } toy</option>
@@ -28,4 +29,5 @@ CategoryToys.propTypes = {
   toys: PropTypes.array,
   onInputComingChange: PropTypes.func,
   name: PropTypes.string,
+  value: PropTypes.string,
 };
