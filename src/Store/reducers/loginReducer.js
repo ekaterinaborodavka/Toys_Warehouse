@@ -1,7 +1,7 @@
 import { LOGIN, UPDATE_FORM_LOGIN, GET_LOGIN } from '../types/types';
 
 export const initialState = {
-  token: localStorage.token ? localStorage.token : '',
+  token: localStorage.token,
   form: {},
   loading: null,
   error: null,
@@ -13,7 +13,7 @@ const reducer = (state = initialState, action) => {
     case LOGIN: {
       return {
         ...state,
-        token: action.subtype === 'success' ? action.token : null,
+        token: action.subtype === 'success' ? action.token : state.token,
         username: action.subtype === 'success' ? action.username : null,
         loading: action.subtype === 'loading',
         error: action.subtype === 'failed' ? action.error : null,

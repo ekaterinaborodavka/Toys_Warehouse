@@ -3,6 +3,7 @@ import { createAuthorized,
         getList as getResource, } from '../../Resources/toys';
 import * as toysActions from '../../Store/actions/toysAction';
 import * as categoriesActions from '../../Store/actions/categoriesAction';
+import { dispError, err } from '../../Utils/toysUtils'
 
 export const login = (item) => {
   return async (dispatch, getState) => {
@@ -30,17 +31,9 @@ export const login = (item) => {
       return res
      }
     }, (e) => {
-      dispatch({
-        type: LOGIN,
-        subtype: 'failed',
-        error: { message: 'Password or login incorrect' },
-      })
+      dispError(dispatch, LOGIN, { message: 'Password or login incorrect' })
     });
-    dispatch({
-      type: LOGIN,
-      subtype: 'failed',
-      error: { message: 'Password or login incorrect' },
-    })
+    dispError(dispatch, LOGIN, { message: 'Password or login incorrect' })
     return result
   }
 };
@@ -55,25 +48,16 @@ export const getLogin = () => {
     });
     if (token) {
       getResource('profile', token).then((res) => {
-        console.log('PROFILERES',res);
         dispatch({
           type: GET_LOGIN,
           subtype: 'success',
           profile: res,
         });
       }, (e) => {
-        dispatch({
-          type: GET_LOGIN,
-          subtype: 'failed',
-          error: { message: 'Something went wrong' },
-        });
+        dispError(dispatch, GET_LOGIN, err)
       });
     } else {
-      dispatch({
-        type: GET_LOGIN,
-        subtype: 'failed',
-        error: { message: 'Something went wrong' },
-      });
+      dispError(dispatch, GET_LOGIN, err)
     }
   };
 };

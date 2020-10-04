@@ -7,7 +7,6 @@ export const findItemInd = (toys, item) => {
 export const newItem = (toys, item, categoriesList) => {
   const category = categoriesList.filter((el) => el.name === item.category);
   let toyId = toys.length;
-  console.log(item);
   const newToy = {...item,
     id: `${++toyId}`,
     categoryId: category[0].id,
@@ -56,3 +55,13 @@ export const createToysNameList = (toys) => {
   })
   return newToysListArr
 };
+
+export const dispError = (dispatch, type, er) => {
+  dispatch({
+    type: type,
+    subtype: 'failed',
+    error: er,
+  });
+}
+
+export const err = { message: 'Something went wrong' }

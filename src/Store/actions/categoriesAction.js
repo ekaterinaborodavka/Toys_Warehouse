@@ -6,7 +6,7 @@ import { GET_CATEGORY,
   UPDATE_FORM_CATEGORY,
   ADD_NEW_CATEGORY} from '../types/types';
 import * as toysActions from '../../Store/actions/toysAction';
-
+import { dispError, err } from '../../Utils/toysUtils'
 
 export const getCategory = () => async (dispatch, getState) => {
   const token = getState().login.token;
@@ -23,18 +23,10 @@ try{
       list: res.categories,
     });
   }, (e) => {
-    dispatch({
-      type: GET_CATEGORY,
-      subtype: 'failed',
-      error: e,
-    });
+    dispError(dispatch, GET_CATEGORY, e)
   });
 } catch {
-    dispatch({
-      type: GET_CATEGORY,
-      subtype: 'failed',
-      error: { message: 'Something went wrong' },
-    });
+    dispError(dispatch, GET_CATEGORY, err)
   }
 };
 
@@ -50,7 +42,6 @@ export const deleteCategory = (id) => async (dispatch, getState) =>{
     type: DELETE_CATEGORY,
     subtype: 'loading',
   });
-try{  
   if (catItem.length === 0 || catItem[0].quantity === 0) {
     if(catItem.length === 0){
       removeCategory(id, token).then(()=> {
@@ -61,15 +52,12 @@ try{
           list: newList,
         });
       }, (e) => {
-        dispatch({
-          type: DELETE_CATEGORY,
-          subtype: 'failed',
-          error: {message: 'Something went wromg'},
-        });
+        dispError(dispatch, DELETE_CATEGORY, err)
       });
     }else{
       dispatch(toysActions.deleteItem(catItem[0].id)).then(() => {
         removeCategory(id, token).then(()=> {
+
           const newList = categoriesList.filter((e) => e.id !== id);
           dispatch({
             type: DELETE_CATEGORY,
@@ -77,22 +65,13 @@ try{
             list: newList,
           });
         }, (e) => {
-          dispatch({
-            type: DELETE_CATEGORY,
-            subtype: 'failed',
-            error: {message: 'Something went wromg'},
-          });
+          dispError(dispatch, DELETE_CATEGORY, err)
         });
       })
     }
+  }else{
+    dispError(dispatch, DELETE_CATEGORY, err)
   }
-}catch{
-  dispatch({
-    type: DELETE_CATEGORY,
-    subtype: 'failed',
-    error: {message: 'Something went wromg'},
-  });
-}
 };
 
 export const addNewCategory = (item) => async (dispatch, getState) =>{
@@ -115,18 +94,10 @@ try{
       list: newList,
     });
   }, (e) => {
-    dispatch({
-      type: ADD_NEW_CATEGORY,
-      subtype: 'failed',
-      error: e,
-    });
+    dispError(dispatch, ADD_NEW_CATEGORY, e)
   });
 } catch {
-  dispatch({
-    type: ADD_NEW_CATEGORY,
-    subtype: 'failed',
-    error: {message: 'Something went wrong'}
-  });
+  dispError(dispatch, ADD_NEW_CATEGORY, err)
 }
 };
 

@@ -29,7 +29,6 @@ export const authorized = async (resource, item) => {
 
 
 export const create = async (resource, item, token) => {
-  console.log('CREATE_ITEM', item);
   const result = await fetch( [endpoint, resource].join('/'),
       { headers: {
         'content-type': 'application/json',

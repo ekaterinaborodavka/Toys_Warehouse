@@ -19,6 +19,7 @@ export default function ToysList() {
   const goPages = useCallback(
       (e) => {
         history.push(`/${e.target.name}`);
+        dispatch(toysActions.clearForm())
         if (e.target.name === 'incoming') {
           dispatch(toysActions.changeIncomin(true));
         } else if (e.target.name === 'outcoming') {

@@ -4,6 +4,7 @@ import { GET_TOYS,
   CHANGE_INCOMIN,
   ADD_ITEM,
   DELETE_ITEM,
+  CLEAR_ERROR,
   BUY_ITEM } from '../types/types';
 
 export const initialState = {
@@ -41,6 +42,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         incoming: action.bool,
+      };
+    }
+    case CLEAR_ERROR: {
+      return {
+        ...state,
+        error: null,
       };
     }
     default:

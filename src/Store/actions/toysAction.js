@@ -9,11 +9,21 @@ import { GET_TOYS,
   ADD_ITEM,
   BUY_ITEM,
   DELETE_ITEM,
+  CLEAR_ERROR,
   ADD_TRANSACTION } from '../types/types';
 import { findItemInd,
   newItem,
   createNewList,
-  newTransaction, } from '../../Utils/toysUtils';
+  newTransaction,
+  dispError,
+  err } from '../../Utils/toysUtils';
+
+  export const changeIncomin = (bool) => {
+    return {
+      type: CHANGE_INCOMIN,
+      bool,
+    };
+  };
 
 export const getToys = () => {
   return async (dispatch, getState) => {
@@ -31,18 +41,10 @@ export const getToys = () => {
           list: res.toys,
         });
       }, (e) => {
-        dispatch({
-          type: GET_TOYS,
-          subtype: 'failed',
-          error: { message: 'Something went wrong' },
-        });
+        dispError(dispatch, GET_TOYS, err)
       });
     } else {
-      dispatch({
-        type: GET_TOYS,
-        subtype: 'failed',
-        error: { message: 'Something went wrong' },
-      });
+      dispError(dispatch, GET_TOYS, err)
     }
   };
 };
@@ -63,18 +65,10 @@ export const getTransactions = () => {
           transaction: res.transactions,
         });
       }, (e) => {
-        dispatch({
-          type: GET_TRANSACTIONS,
-          subtype: 'failed',
-          error: { message: 'Something went wrong' },
-        });
+        dispError(dispatch, GET_TRANSACTIONS, err)
       });
     } else {
-      dispatch({
-        type: GET_TRANSACTIONS,
-        subtype: 'failed',
-        error: { message: 'Something went wrong' },
-      });
+      dispError(dispatch, GET_TRANSACTIONS, err)
     }
   };
 };
@@ -92,8 +86,7 @@ export const addItem = (item) => async (dispatch, getState) =>{
     type: ADD_ITEM,
     subtype: 'loading',
   });
-  try{
-    if(item.quantity > 0){  
+  if(item.quantity > 0){  
     if (ind === -1) {
     addItemResource(newToy, token).then((res) => {
       const newList = [...state.toys.list, res];
@@ -106,11 +99,7 @@ export const addItem = (item) => async (dispatch, getState) =>{
       dispatch(addTransaction(item, 'incoming'));
       dispatch(getToys())
     }, (e) => {
-      dispatch({
-        type: ADD_ITEM,
-        subtype: 'failed',
-        error: { message: 'Something went wrong' },
-      });
+      dispError(dispatch, ADD_ITEM, err)
     });
   } else {
     const toyUpdate = {...newToy,
@@ -126,19 +115,11 @@ export const addItem = (item) => async (dispatch, getState) =>{
       dispatch(addTransaction(item, 'incoming'));
       dispatch(getToys())
     }, (e) => {
-      dispatch({
-        type: ADD_ITEM,
-        subtype: 'failed',
-        error: { message: 'Something went wrong' },
-      });
+      dispError(dispatch, ADD_ITEM, err)
     });
   }
-}} catch {
-  dispatch({
-    type: ADD_ITEM,
-    subtype: 'failed',
-    error: { message: 'Something went wrong' },
-  });
+} else {
+  dispError(dispatch, ADD_ITEM, err)
 }
 };
 
@@ -156,7 +137,7 @@ export const buyItem = (item) => async (dispatch, getState) =>{
     type: BUY_ITEM,
     subtype: 'loading',
   });
-try{
+  if(item.quantity > 0){
   if (ind >= 0) {
     const toyUpdate = {...item,
       description: updateItem.description,
@@ -173,21 +154,17 @@ try{
         dispatch(addTransaction(item, 'outcoming'));
         dispatch(getToys())
       }, (e) => {
-        dispatch({
-          type: BUY_ITEM,
-          subtype: 'failed',
-          error: { message: 'This toy is not in stock' },
-        });
+        dispError(dispatch, BUY_ITEM, { message: 'This toy is not in stock' })
       });
     } else {
       alert('There is no such quantity in stock');
+      dispError(dispatch, BUY_ITEM, { message: 'There is no such quantity in stock' })
     }
-  }} catch {
-    dispatch({
-      type: BUY_ITEM,
-      subtype: 'failed',
-      error: { message: 'This toy is not in stock' },
-    });
+  }else{
+    dispError(dispatch, BUY_ITEM, err)
+  }
+  } else {
+    dispError(dispatch, BUY_ITEM, err)
   }
 };
 
@@ -209,26 +186,11 @@ export const deleteItem = (id) => async (dispatch, getState) =>{
         list: newList,
       });
     }, (e) => {
-      dispatch({
-        type: DELETE_ITEM,
-        subtype: 'failed',
-        error: { message: 'Something went wrong' },
-      });
+      dispError(dispatch, DELETE_ITEM, err)
     });
   } catch {
-    dispatch({
-      type: DELETE_ITEM,
-      subtype: 'failed',
-      error: { message: 'Something went wrong' },
-    });
+    dispError(dispatch, DELETE_ITEM, err)
   }
-};
-
-export const changeIncomin = (bool) => {
-  return {
-    type: CHANGE_INCOMIN,
-    bool,
-  };
 };
 
 export const addTransaction = (item, type) => async (dispatch, getState) =>{
@@ -250,8 +212,6 @@ export const addTransaction = (item, type) => async (dispatch, getState) =>{
   });
 try{ 
   addTransactionResource(trans, token).then((res) => {
-    console.log('ITEM_TRANS', trans);
-    console.log('RES_TRANS', res);
       const newList = [...state.toys.transaction, res];
     dispatch({
       type: ADD_TRANSACTION,
@@ -259,17 +219,15 @@ try{
       transaction: newList,
     });
   }, (e) => {
-    dispatch({
-      type: ADD_TRANSACTION,
-      subtype: 'failed',
-      error: e,
-    });
+    dispError(dispatch, ADD_TRANSACTION, e)
   });
 } catch {
-  dispatch({
-    type: ADD_TRANSACTION,
-    subtype: 'failed',
-    error: { message: 'Something went wrong' },
-  });
+  dispError(dispatch, ADD_TRANSACTION, err)
 }
+};
+
+export const clearForm = () => {
+  return {
+    type: CLEAR_ERROR,
+  };
 };
