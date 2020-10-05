@@ -1,7 +1,11 @@
 
 export const findItemInd = (toys, item) => {
-  return toys.findIndex((el) => el.name === item.name &&
-         el.category.id === item.categoryId );
+  return toys.findIndex((el) => {
+    return (
+      el.name.toLowerCase() === item.name.toLowerCase() &&
+      el.category.id === item.categoryId
+         )
+        } );
 };
 
 export const newItem = (toys, item, categoriesList) => {

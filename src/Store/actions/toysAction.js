@@ -80,12 +80,13 @@ export const addItem = (item) => async (dispatch, getState) =>{
   const toysList = state.toys.list;
   const categoriesList = state.categories.categoriesList;
   const newToy = newItem(toysList, item, categoriesList);
+  const ind = findItemInd(toysList, newToy);
 
   dispatch({
     type: ADD_ITEM,
     subtype: 'loading',
   });
-  try {
+  if(ind === -1){
     addItemResource(newToy, token).then((res) => {
       const newList = [...state.toys.list, res];
       dispatch({
@@ -96,8 +97,9 @@ export const addItem = (item) => async (dispatch, getState) =>{
     }, (e) => {
       dispError(dispatch, ADD_ITEM, err);
     });
-  } catch {
-    dispError(dispatch, ADD_ITEM, err);
+  } else {
+    dispError(dispatch, ADD_ITEM, 
+      { message: 'This toy is in stock' });
   }
 };
 
