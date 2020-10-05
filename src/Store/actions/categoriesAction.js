@@ -6,7 +6,7 @@ import { GET_CATEGORY,
   UPDATE_FORM_CATEGORY,
   ADD_NEW_CATEGORY} from '../types/types';
 import * as toysActions from '../../Store/actions/toysAction';
-import { dispError, err } from '../../Utils/toysUtils';
+import { findIndCat,dispError, err } from '../../Utils/toysUtils';
 
 export const getCategory = () => async (dispatch, getState) => {
   const token = getState().login.token;
@@ -79,12 +79,13 @@ export const addNewCategory = (item) => async (dispatch, getState) =>{
   const catList = state.categories.categoriesList;
   let catId = catList.length;
   const newCat = {id: `${++catId}`, name: item };
+  const ind = findIndCat(catList, item)
 
   dispatch({
     type: ADD_NEW_CATEGORY,
     subtype: 'loading',
   });
-  try {
+  if(ind === -1) {
     createCategory(newCat, token).then((res) => {
       const newList = [...catList, res];
       dispatch({
@@ -95,8 +96,9 @@ export const addNewCategory = (item) => async (dispatch, getState) =>{
     }, (e) => {
       dispError(dispatch, ADD_NEW_CATEGORY, e);
     });
-  } catch {
-    dispError(dispatch, ADD_NEW_CATEGORY, err);
+  } else {
+    dispError(dispatch, ADD_NEW_CATEGORY, 
+      { message: 'This category already exists'});
   }
 };
 

@@ -8,6 +8,14 @@ export const findItemInd = (toys, item) => {
         } );
 };
 
+export const findIndCat = (catList, item) => {
+  return catList.findIndex((el) => {
+    return (
+      el.name.toLowerCase() === item.toLowerCase()
+         )
+        } );
+};
+
 export const newItem = (toys, item, categoriesList) => {
   const category = categoriesList.filter((el) => el.name === item.category);
   let toyId = toys.length;
