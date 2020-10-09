@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
+import ButtonBack from '../ButtonBack/ButtonBack';
 
 import TransactionList from '../TransactionList/TransactionList';
 
@@ -13,6 +14,7 @@ export default function Transaction() {
     <React.Fragment>
       <h1 className='Title'>Toys Warehouse</h1>
       <h2 className='Transaction_Title'>Transaction</h2>
+      <ButtonBack />
       <div className='Transaction_Content'>
         { (transactionList.length === 0) ? 'Transaction page' :
                 Array.isArray(transactionList) &&

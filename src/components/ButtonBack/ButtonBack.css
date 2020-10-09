@@ -1,0 +1,7 @@
+.Back{
+    margin: 0.5%;
+    padding: 0.2%;
+    border: 1px solid black;
+    background-color: rgb(175, 193, 224);
+    border-radius: 15%;
+}

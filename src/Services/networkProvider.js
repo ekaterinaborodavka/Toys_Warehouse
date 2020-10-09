@@ -4,12 +4,18 @@ export const initWithEndpoint = (url) => {
   endpoint = url;
 };
 
-
-export const get = async (resource, token) => {
-  return fetch( [endpoint, resource].join('/'), {headers: {
+export const headersToy = (token) => {
+  const headers = {
     'content-type': 'application/json',
     'Authorization': `Bearer ${token}`,
-  }} ).then((res) => res.json())
+  }
+  return headers
+};
+
+
+export const get = async (resource, token) => {
+  return fetch( [endpoint, resource].join('/'),
+    { headers: headersToy(token)}).then((res) => res.json())
       .then((res) => {
         return res;
       });
@@ -30,10 +36,8 @@ export const authorized = async (resource, item) => {
 
 export const create = async (resource, item, token) => {
   const result = await fetch( [endpoint, resource].join('/'),
-      { headers: {
-        'content-type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      }, body: JSON.stringify(item), method: 'POST' } );
+      { headers: headersToy(token),
+       body: JSON.stringify(item), method: 'POST' } );
   let data ={};
   if (result.ok) {
     data = await result.json();
@@ -45,10 +49,8 @@ export const create = async (resource, item, token) => {
 
 export const updateMerg = async (resource, id, item, token) => {
   const result = await fetch( [endpoint, resource, id].join('/'),
-      { headers: {
-        'content-type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      }, body: JSON.stringify(item), method: 'PATCH' } );
+      { headers: headersToy(token), 
+        body: JSON.stringify(item), method: 'PATCH' } );
   let data ={};
   if (result.ok) {
     data = await result.json();
@@ -60,9 +62,7 @@ export const updateMerg = async (resource, id, item, token) => {
 
 export const remove = async (resource, id, token) => {
   const result = await fetch( [endpoint, resource, id].join('/'),
-      { headers: {
-        'content-type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      }, method: 'DELETE' } );
+      { headers: headersToy(token),
+       method: 'DELETE' } );
   return result;
 };

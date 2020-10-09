@@ -6,6 +6,7 @@ import Loader from '../Loader/Loader';
 import * as categoriesActions from '../../Store/actions/categoriesAction';
 
 import './CategoryList.css';
+import ButtonBack from '../ButtonBack/ButtonBack';
 
 export default function CategoryList() {
   const categories = useSelector((state) => state.categories.categoriesList,
@@ -41,6 +42,7 @@ export default function CategoryList() {
     <React.Fragment>
       <h1 className='Title'>Toys Warehouse</h1>
       <h2 className='CategoryList_Title'>Categories</h2>
+      <ButtonBack />
       {isLoading && <Loader />}
       {error && <div className='Wrong' >ERROR: {error}</div>}
       <div className='CategoryList'>

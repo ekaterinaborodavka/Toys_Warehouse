@@ -8,6 +8,7 @@ import * as toysActions from '../../Store/actions/toysAction';
 import { createToysNameList } from '../../Utils/toysUtils';
 
 import './InOutComing.css';
+import ButtonBack from '../ButtonBack/ButtonBack';
 
 export default function Incoming() {
   const toys = useSelector((state) => state.toys.list, shallowEqual);
@@ -48,6 +49,7 @@ export default function Incoming() {
       <h2 className='InOutcoming_Title'>
         { incoming? 'Incoming': 'Outcoming'}
       </h2>
+      <ButtonBack />
       <div className='InOutcoming_container'>
         <form className='InOutcoming_form' onSubmit={ onFormSubmit }>
           <div className='InOut_Coming_Inputs_Wrapper'>
