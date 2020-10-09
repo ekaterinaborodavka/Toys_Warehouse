@@ -1,5 +1,6 @@
 import React from 'react';
-import ButtonBack from '../ButtonBack/ButtonBack';
+
+import Navigation from '../Navigation/Navigation';
 
 import './About.css';
 
@@ -9,7 +10,7 @@ export default function About() {
     <React.Fragment>
       <h1 className='Title'>Toys Warehouse</h1>
       <h2 className='About_Title'>About</h2>
-      <ButtonBack />
+      <Navigation />
       <div className='About_Content'>
                 Page about app&apos;s author
       </div>
